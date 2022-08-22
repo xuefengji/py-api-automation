@@ -1,0 +1,18 @@
+environment: test
+
+
+mysql:
+  host: '127.0.0.1',  # MySQL服务端的IP地址
+  port: 3306,  # MySQL默认PORT地址(端口号)
+  user: 'xxxxx',  # 用户名
+  password: 'xxxxx',  # 密码,也可以简写为passwd
+  database: 'xxxxx',  # 库名称,也可以简写为db
+  charset: 'utf8'
+
+
+email:
+  host: smtp.qq.com
+  user:
+  key:
+  recevies:
+    - 12345678@qq.com

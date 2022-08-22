@@ -1,0 +1,35 @@
+info:
+  url: /api/sys/index/config
+  method: get
+
+
+cases:
+  - is_run: true
+    title: "获取系列"
+    headers:
+      Content-Type: application/json
+      Authorization: cache.token
+    cookies:
+    is_depend: true
+    depends_data:
+      - depends_yaml: login/login.yaml
+        depends_case: 0
+        depends_data_type: response
+        depends_data: $.data.token
+    request_type: params
+    data:
+      data:
+        start: 0
+        limit: 10
+        filter: ''
+    url_encode:
+        - data:filter
+    assert:
+      assert_data: response
+      actual: $.message
+      type: ==
+      expect: "success"
+
+
+
+

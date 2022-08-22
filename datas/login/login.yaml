@@ -1,0 +1,45 @@
+info:
+  url: /auth/token
+  method: post
+
+
+cases:
+  - is_run: true
+    title: "登录成功"
+    headers:
+      Content-Type: application/json
+    cookies:
+    is_depend: false
+    depends_data:
+    request_type: json
+    data:
+      data:
+        username: 'admin'
+        password: '123456'
+    url_encode:
+    assert:
+      assert_data: response
+      actual: $.message
+      type: ==
+      expect: "success"
+
+  - is_run: false
+    title: 用户名错误
+    headers:
+      Content_Type: application/json
+    is_depend: false
+    depends_data:
+    request_type: json
+    data:
+      data:
+        name: admin1
+        password: '123456'
+    url_encode:
+    assert:
+      assert_data: response
+      actual: $.message
+      type: ==
+      expect: "登录授权失败"
+
+
+
