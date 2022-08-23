@@ -13,18 +13,8 @@ class Assert:
     @classmethod
     def expect_check(cls,expect,actual,type):
         if type=="==":
-            AssertType.assert_equal(expect, actual)
-        # match type:
-        #     case "==":
-        #         assert expect == actual
-        #     case "<":
-        #         assert expect < actual
-        #     case ">":
-        #         assert expect > actual
-        #     case "<=":
-        #         assert expect <= actual
-        #     case ">=":
-        #         assert expect >= actual
+            AssertType.equal(expect, actual)
+
 
 
 

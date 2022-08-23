@@ -9,6 +9,31 @@
 class AssertType:
 
     @classmethod
-    def assert_equal(cls, expect, actual):
+    def equal(cls, expect, actual):
         assert expect==actual
+
+    @classmethod
+    def less_than(cls, expect, actual):
+        assert expect < actual
+
+    @classmethod
+    def less_than_or_equals(cls,expect, actual):
+        assert expect <= actual
+
+    @classmethod
+    def greater_than(cls, expect, actual):
+        assert expect > actual
+
+    @classmethod
+    def greater_than_or_equals(cls, expect, actual):
+        assert expect >= actual
+
+    @classmethod
+    def not_equals(cls, expect, actual):
+        assert expect != actual
+
+    @classmethod
+    def contains(cls, expect, actual):
+        assert expect in actual
+
 
