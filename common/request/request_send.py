@@ -28,18 +28,17 @@ class RequestSend(BaseRequest):
         headers = case_data['headers']
         request_type = case_data['request_type']
         data = case_data['data']
-        request_url = case_info['host'] + url
         if hasattr(RequestSend, method):
             res = getattr(RequestSend, method)(
                 self,
-                request_url,
+                url,
                 headers,
                 data,
                 request_type,
                 cookies=None
             )
             with allure.step('发送{}请求'.format(method)):
-                allure.attach(name="当前请求url：", body=request_url)
+                allure.attach(name="当前请求url：", body=url)
 
                 allure.attach(name="当前请求headers：", body=str(headers))
                 allure.attach(name="当前请求数据：", body=str(data))

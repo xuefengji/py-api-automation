@@ -24,7 +24,7 @@ class SetUp():
         """
         check_data = data
         check_info = info
-        check_info['host'] = host
+        check_info['url'] = host + check_info['url']
         is_run = data['is_run']
         is_depend = data['is_depend']
         if is_run:
