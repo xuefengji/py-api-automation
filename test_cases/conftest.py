@@ -9,7 +9,7 @@ import os
 import pytest
 import requests
 
-from config import BaseConfig
+from utils.config_utils.config_control import ConfigGet
 from utils.file_utils.operation_cache import OperationCache
 from utils.file_utils.operation_json import OperationJson
 
@@ -37,6 +37,9 @@ def case_skip(case_data):
         pytest.skip()
 
 
+@pytest.fixture(scope="session", autouse=True)
+def get_host():
+    return ConfigGet.get_host()
 
 @pytest.fixture(scope="session", autouse=True)
 def token_init():

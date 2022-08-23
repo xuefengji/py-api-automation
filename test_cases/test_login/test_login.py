@@ -19,8 +19,8 @@ case_info = yaml_data['info']
 
 class TestLogin():
     @pytest.mark.parametrize("case_data", case_data)
-    def test_login(self, case_data, case_skip):
-        res = SetUp.request_init(case_info, case_data)
+    def test_login(self, case_data, case_skip, get_host):
+        res = SetUp.request_init(case_info, case_data, get_host)
         check_data = TearDown().get_assert_jsonpath(res, case_data['assert'])
         TearDown().check_actual(check_data)
         # print(type(res))
