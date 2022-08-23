@@ -11,8 +11,8 @@ mysql:
 
 
 email:
-  host: smtp.qq.com
-  user:
-  key:
+  host: smtp.qq.com     #邮箱服务
+  user:                 # 邮箱用户名
+  key:                  # 邮箱鉴权 key
   recevies:
     - 12345678@qq.com

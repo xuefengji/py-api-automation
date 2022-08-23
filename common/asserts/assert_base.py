@@ -9,11 +9,11 @@ from common.asserts.assert_type import AssertType
 
 
 
-class Assert:
+class Assert(AssertType):
     @classmethod
     def expect_check(cls,expect,actual,type):
         if type=="==":
-            AssertType.equal(expect, actual)
+            cls.equal(expect, actual)
 
 
 

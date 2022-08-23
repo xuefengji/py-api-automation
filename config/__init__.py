@@ -7,8 +7,6 @@
 
 import os
 
-from utils.file_utils.operation_yaml import OperationYaml
-
 
 class BaseConfig:
     """
@@ -48,13 +46,7 @@ class BaseConfig:
     report_html_test_case_dir = os.path.join(root_dir, 'reports' + _sep +
                                              "html" + _sep + 'data' + _sep + "test-cases" + _sep)
 
-    # 获取环境地址
-    @classmethod
-    def get_environment(cls, environment:str) -> str:
-        env = OperationYaml.read_yaml(BaseConfig.environment_dir)
-        if environment == 'test':
-            return env['test']['host']
-        return env['test']['host']
+
 
 if __name__ == '__main__':
     print(BaseConfig.root_dir)
