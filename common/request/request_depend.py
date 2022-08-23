@@ -15,7 +15,7 @@ from utils.request_utils.request_check import Check
 class SetUp():
 
     @classmethod
-    def request_init(cls, info:dict, data:dict):
+    def request_init(cls, info:dict, data:dict, host:str):
         """
         请求前准备
         :param info: 请求 url 信息
@@ -24,6 +24,7 @@ class SetUp():
         """
         check_data = data
         check_info = info
+        check_info['host'] = host
         is_run = data['is_run']
         is_depend = data['is_depend']
         if is_run:

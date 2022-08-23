@@ -7,12 +7,16 @@
 
 import allure
 from utils.request_utils.request_base import BaseRequest
-from utils.file_utils.operation_yaml import OperationYaml
-from config import BaseConfig
+
 from utils.log_utils.log_decorate import LogDecorate
 
 
 class RequestSend(BaseRequest):
+
+    def __new__(cls, *args, **kwargs):
+        if not hasattr(cls, "_instance"):
+            cls._instance = super().__new__(cls)
+        return cls._instance
 
     def __init__(self):
         super(BaseRequest, self).__init__()
@@ -24,8 +28,7 @@ class RequestSend(BaseRequest):
         headers = case_data['headers']
         request_type = case_data['request_type']
         data = case_data['data']
-        host = self.get_host()
-        request_url = host + url
+        request_url = case_info['host'] + url
         if hasattr(RequestSend, method):
             res = getattr(RequestSend, method)(
                 self,
@@ -44,13 +47,6 @@ class RequestSend(BaseRequest):
             return res
         raise ValueError("当前请求方式不存在！")
 
-    def get_host(self):
-        """
-        获取环境地址
-        ：param environment:
-        """
-        env = OperationYaml.read_yaml(BaseConfig.setting_dir)
-        return BaseConfig.get_environment(env['environment'])
 
 
 
