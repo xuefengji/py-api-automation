@@ -14,39 +14,32 @@ class BaseConfig:
     """
     _sep = os.sep
     # 项目路径
-    root_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__))+ _sep).split('config')[0]
+    root_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)) + _sep).split('config')[0]
     # 环境配置文件
-    environment_dir = os.path.join(root_dir, 'config' + _sep + 'environment.yaml')
+    environment_dir = os.path.join(root_dir, 'config' , 'environment.yaml')
     #项目配置
-    setting_dir = os.path.join(root_dir, 'config' + _sep + 'setting.yaml')
+    setting_dir = os.path.join(root_dir, 'config' , 'setting.yaml')
     # 用例路径
-    case_dir = os.path.join(root_dir, 'test_case' + _sep)
+    case_dir = os.path.join(root_dir, 'test_case' )
     # 测试用例数据路径
-    data_dir = os.path.join(root_dir, 'datas' + _sep)
+    data_dir = os.path.join(root_dir, 'datas')
 
-    cache_dir = os.path.join(root_dir, 'cache' + _sep)
+    cache_dir = os.path.join(root_dir, 'cache')
     if not os.path.exists(cache_dir):
         os.mkdir(cache_dir)
 
-    log_dir = os.path.join(root_dir, 'logs' + _sep)
+    log_dir = os.path.join(root_dir, 'logs')
 
-    # 上传的文件路径
-    file_dir = os.path.join(root_dir, 'files' + _sep)
-
-    util_dir = os.path.join(root_dir, 'utils' + _sep)
-    util_install_dir = util_dir + 'otherUtils' + _sep + 'InstallUtils' + _sep
     # 测试报告路径
-    report_dir = os.path.join(root_dir, 'reports'+ _sep)
+    report_dir = os.path.join(root_dir, 'reports')
     # if not os.path.exists(report_dir):
     #     os.mkdir(report_dir)
     # 测试报告中的 allure 报告路径
-    allure_report = os.path.join(report_dir, "allure_report"+_sep)
-    allure_html_report = os.path.join(report_dir, 'allure_html_report'+_sep)
-    # 测试报告中的test_case路径
-    report_html_test_case_dir = os.path.join(root_dir, 'reports' + _sep +
-                                             "html" + _sep + 'data' + _sep + "test-cases" + _sep)
+    allure_report = os.path.join(report_dir, "allure_report")
+    allure_html_report = os.path.join(report_dir, 'allure_html_report')
+
 
 
 
 if __name__ == '__main__':
-    print(BaseConfig.root_dir)
+    print(BaseConfig.allure_html_report)
