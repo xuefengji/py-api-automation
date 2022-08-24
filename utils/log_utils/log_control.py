@@ -11,17 +11,12 @@ from config import BaseConfig
 
 class LogUtils():
 
-    # def __new__(cls, *args, **kwargs):
-    #     if not hasattr(cls, "_instance"):
-    #         cls._instance = super().__new__(cls)
-    #     return cls._instance
-
     def __init__(self, log_path, level):
         # 判断文件目录是否存在
         if not os.path.exists(log_path):
             os.mkdir(log_path)
         self.level = level
-        self.log_name = log_path+'%s_%s.log'% (time.strftime('%Y-%m-%d'), level)
+        self.log_name = os.path.join(log_path, '%s_%s.log'% (time.strftime('%Y-%m-%d'), level))
         self.logger = logging.getLogger(__name__)
         self.logger.setLevel(level=logging.INFO)
         # 设置日志的格式
