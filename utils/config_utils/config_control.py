@@ -33,7 +33,7 @@ class ConfigGet(BaseConfig):
     @classmethod
     def get_host(cls) -> str:
         # print(cls.setting_dir)
-        environment = cls.setting_dir['environment']
+        environment = cls.get_setting()['environment']
         return cls.get_environment(str(environment))['host']
 
     #获取 email 信息
@@ -41,14 +41,13 @@ class ConfigGet(BaseConfig):
     def get_email(cls) -> dict:
         return cls.setting_dir['email']
 
-
     @classmethod
     def get_mysql(cls) -> dict:
         return cls.setting_dir['mysql']
 
 
 if __name__ == '__main__':
-    data = ConfigGet.get_setting()
+    data = ConfigGet.get_host()
     print(data)
 
 
