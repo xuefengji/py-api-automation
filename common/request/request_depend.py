@@ -5,7 +5,11 @@
 # @File: request_depend.py
 # @Desc: 请求初始化
 
+
+import os
+
 from config import BaseConfig
+from utils.config_utils.config_control import ConfigGet
 from utils.file_utils.operation_yaml import OperationYaml
 from common.request.request_send import RequestSend
 from common.request.request_teardown import TearDown
@@ -33,8 +37,9 @@ class SetUp():
                 for depends_data in depends:
                     depends_yaml = depends_data['depends_yaml']
                     depends_case = depends_data['depends_case']
-                    yaml_data = OperationYaml.read_yaml(BaseConfig.data_dir + depends_yaml)
+                    yaml_data = OperationYaml.read_yaml(os.path.join(BaseConfig.data_dir, depends_yaml))
                     case_info = yaml_data['info']
+                    case_info['url'] = ConfigGet.get_host() + case_info['url']
                     cases = yaml_data['cases']
                     case_data = cases[int(depends_case)]
                     if case_data['is_depend']:
