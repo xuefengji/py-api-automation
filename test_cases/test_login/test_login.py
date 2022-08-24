@@ -12,9 +12,10 @@ from common.request.request_depend import SetUp
 from common.request.request_teardown import TearDown
 
 
-yaml_data = OperationYaml().read_yaml(BaseConfig.data_dir + 'login/login.yaml')
+yaml_data = OperationYaml().read_yaml(os.path.join(BaseConfig.data_dir, 'login', 'login.yaml'))
 case_data = yaml_data['cases']
 case_info = yaml_data['info']
+
 
 
 class TestLogin():

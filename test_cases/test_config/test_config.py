@@ -5,7 +5,7 @@
 # @File: test_config.py
 # @Desc:
 
-
+import os
 import pytest
 from utils.file_utils.operation_yaml import OperationYaml
 from config import BaseConfig
@@ -13,15 +13,15 @@ from common.request.request_depend import SetUp
 from common.request.request_teardown import TearDown
 
 
-yaml_data = OperationYaml().read_yaml(BaseConfig.data_dir + 'config/config.yaml')
+yaml_data = OperationYaml().read_yaml(os.path.join(BaseConfig.data_dir, 'config', 'config.yaml'))
 case_data = yaml_data['cases']
 case_info = yaml_data['info']
 
 
 class TestConfig():
     @pytest.mark.parametrize("case_data", case_data)
-    def test_config(self,case_data, case_skip):
-        res = SetUp.request_init(case_info, case_data)
+    def test_config(self,case_data, case_skip, get_host):
+        res = SetUp.request_init(case_info, case_data, get_host)
         check_data = TearDown().get_assert_jsonpath(res, case_data['assert'])
         TearDown().check_actual(check_data)
         # print(type(res))
