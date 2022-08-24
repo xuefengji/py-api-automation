@@ -9,7 +9,6 @@
 import os
 
 from config import BaseConfig
-from utils.config_utils.config_control import ConfigGet
 from utils.file_utils.operation_yaml import OperationYaml
 from common.request.request_send import RequestSend
 from common.request.request_teardown import TearDown
@@ -39,7 +38,7 @@ class SetUp():
                     depends_case = depends_data['depends_case']
                     yaml_data = OperationYaml.read_yaml(os.path.join(BaseConfig.data_dir, depends_yaml))
                     case_info = yaml_data['info']
-                    case_info['url'] = ConfigGet.get_host() + case_info['url']
+                    case_info['url'] = host + case_info['url']
                     cases = yaml_data['cases']
                     case_data = cases[int(depends_case)]
                     if case_data['is_depend']:
