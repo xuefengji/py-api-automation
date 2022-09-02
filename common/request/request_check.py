@@ -35,7 +35,7 @@ class Check:
         :return:
         """
         # print(case_data)
-        encode_data = data['url_encode']
+        encode_data = data['encode']
         case_data = data['data']
         # 校验是否有依赖数据
         for k, v in case_data.items():
@@ -50,7 +50,7 @@ class Check:
         # 校验是否有参数编码
         if encode_data:
             for i in encode_data:
-                case_data[i.split(':')[0]][i.split(':')[1]] = Check.url_encode(case_data[i.split(':')[0]][i.split(':')[1]])
+                case_data[i.split(':')[0]][i.split(':')[1]] = Check.encode(case_data[i.split(':')[0]][i.split(':')[1]])
             return data
         return data
 
@@ -81,7 +81,7 @@ class Check:
             for k, v in headers.items():
                 if v.startswith('$'):
                     if k == 'Authorization':
-                        headers[k] =jsonpath(data, v)[0]
+                        headers[k] = jsonpath(data, v)[0]
                     else:
                         headers[k] = jsonpath(data, v)[0]
                 elif v.startswith('cache'):
@@ -91,7 +91,7 @@ class Check:
             raise ValueError("check headers 失败")
 
     @staticmethod
-    def url_encode(data:str):
+    def encode(data:str):
         """
         参数编码
         :param data: 需要编码的值
