@@ -9,12 +9,13 @@
 import json
 from jsonpath import jsonpath
 from common.asserts.assert_base import Assert
-
+from utils.database_utils.mysql_control import MySQL
+from utils.config_utils.config_control import ConfigGet
 
 class TearDown:
 
     @classmethod
-    def check_actual(cls,data:dict):
+    def assert_actual(cls,data:dict):
         """
         断言期望结果和实际结果
         :param data: 断言数据
@@ -26,7 +27,7 @@ class TearDown:
         Assert().expect_check(expect, actual,type)
 
     @classmethod
-    def get_assert_jsonpath(cls, res, data:dict):
+    def get_assert_jsonpath(cls, data:dict, res=None):
         """
         获取 assert 数据
         :param res: 请求后数据
@@ -35,9 +36,11 @@ class TearDown:
         """
         assert_data = data['assert_data']
         if assert_data == "response":
-            data = TearDown.get_assert_response(res, data)
+            data = TearDown.get_assert_response(data, res)
         elif assert_data == "headers":
-            data = TearDown.get_assert_headers(res, data)
+            data = TearDown.get_assert_headers(data, res)
+        elif assert_data == "sql":
+            data = TearDown.get_assert_sql(data)
         return data
 
     @classmethod
@@ -73,7 +76,7 @@ class TearDown:
     @staticmethod
     def get_assert_headers(res, data:dict):
         """
-        获取请求头数据
+        获取请求头断言数据
         :param res: 请求
         :param data: assert 值
         :return:
@@ -86,12 +89,19 @@ class TearDown:
             raise ValueError("获取断言headers相关值失败！")
 
     @staticmethod
-    def get_assert_sql(data: dict):
+    def get_assert_sql(data:dict):
         """
-        获取sql请求数据
+        获取sql请求断言数据
         :param data: assert 值
         :return:
         """
+        config = ConfigGet.get_mysql()
+        try:
+            res = MySQL(config).select( data['actual'])
+            data['actual'] = res
+            return data
+        except Exception as e:
+            raise ValueError("获取数据库断言相关值失败！")
 
 
     @staticmethod
