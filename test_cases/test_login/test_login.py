@@ -23,7 +23,7 @@ class TestLogin():
     def test_login(self, case_data, case_skip, get_host):
         res = SetUp.request_init(case_info, case_data, get_host)
         check_data = TearDown().get_assert_jsonpath(res, case_data['assert'])
-        TearDown().check_actual(check_data)
+        TearDown().assert_actual(check_data)
         # print(type(res))
 
 

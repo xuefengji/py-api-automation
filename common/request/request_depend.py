@@ -12,7 +12,7 @@ from config import BaseConfig
 from utils.file_utils.operation_yaml import OperationYaml
 from common.request.request_send import RequestSend
 from common.request.request_teardown import TearDown
-from utils.request_utils.request_check import Check
+from common.request.request_check import Check
 
 
 class SetUp():
