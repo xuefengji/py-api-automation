@@ -34,12 +34,12 @@ class TearDown:
         :param data: 断言数据
         :return:
         """
-        assert_data = data['assert_data']
-        if assert_data == "response":
+        assert_type = data['assert_type']
+        if assert_type == "response":
             data = TearDown.get_assert_response(data, res)
-        elif assert_data == "headers":
+        elif assert_type == "headers":
             data = TearDown.get_assert_headers(data, res)
-        elif assert_data == "sql":
+        elif assert_type == "sql":
             data = TearDown.get_assert_sql(data)
         return data
 
