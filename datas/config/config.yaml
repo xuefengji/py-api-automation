@@ -17,15 +17,16 @@ cases:
         depends_data_type: response
         depends_data: $.data.token
     request_type: params
-    data:
+    parameters:
       data:
         start: 0
         limit: 10
         filter: ''
-    url_encode:
+      params:
+    encode:
         - data:filter
     assert:
-      assert_data: response
+      assert_type: response
       actual: $.message
       type: ==
       expect: "success"
