@@ -36,9 +36,9 @@ class TearDown:
         """
         assert_type = data['assert_type']
         if assert_type == "response":
-            data = TearDown.get_assert_response(data, res)
+            data = TearDown.get_assert_response(res, data)
         elif assert_type == "headers":
-            data = TearDown.get_assert_headers(data, res)
+            data = TearDown.get_assert_headers(res, data)
         elif assert_type == "sql":
             data = TearDown.get_assert_sql(data)
         return data
