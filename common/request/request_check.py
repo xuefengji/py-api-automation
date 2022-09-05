@@ -36,7 +36,7 @@ class Check:
         """
         # print(case_data)
         encode_data = data['encode']
-        case_data = data['data']
+        case_data = data['parameters']
         # 校验是否有依赖数据
         for k, v in case_data.items():
             for j, h in v.items():
