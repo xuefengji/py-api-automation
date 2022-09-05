@@ -44,7 +44,7 @@ class TearDown:
         return data
 
     @classmethod
-    def get_depend_jsonpath(cls, res, data: dict):
+    def get_depend_data(cls, res, data: dict):
         """
         获取 依赖数据
         :param res: 请求后数据
