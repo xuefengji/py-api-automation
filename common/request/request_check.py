@@ -39,14 +39,15 @@ class Check:
         case_data = data['parameters']
         # 校验是否有依赖数据
         for k, v in case_data.items():
-            for j, h in v.items():
-                if str(h).startswith('$'):
-                    case_data[k][j] = jsonpath(data, h)[0]
-                elif str(h).startswith('random'):
-                    if hasattr(RandomUtil, str(h)):
-                        case_data[k][j] = getattr(RandomUtil, str(h))('test', 3)
-                    else:
-                        raise ValueError('当前随机生成的函数不存在！')
+            if v:
+                for j, h in v.items():
+                    if str(h).startswith('$'):
+                        case_data[k][j] = jsonpath(data, h)[0]
+                    elif str(h).startswith('random'):
+                        if hasattr(RandomUtil, str(h)):
+                            case_data[k][j] = getattr(RandomUtil, str(h))('test', 3)
+                        else:
+                            raise ValueError('当前随机生成的函数不存在！')
         # 校验是否有参数编码
         if encode_data:
             for i in encode_data:
@@ -81,7 +82,7 @@ class Check:
             for k, v in headers.items():
                 if v.startswith('$'):
                     if k == 'Authorization':
-                        headers[k] = jsonpath(data, v)[0]
+                        headers[k] = 'Bearer '+jsonpath(data, v)[0]
                     else:
                         headers[k] = jsonpath(data, v)[0]
                 elif v.startswith('cache'):
