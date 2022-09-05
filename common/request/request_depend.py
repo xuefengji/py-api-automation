@@ -44,7 +44,7 @@ class SetUp():
                     if case_data['is_depend']:
                         SetUp.request_init(case_info, case_data)
                     res = RequestSend().send_request(case_info, case_data)
-                    check_data['depends_data'] = TearDown.get_depend_jsonpath(res, depends_data)
+                    check_data['depends_data'] = TearDown.get_depend_data(res, depends_data)
                     check_info, check_data = Check.check(check_info, check_data)
                 res = RequestSend().send_request(check_info, check_data)
                 return res
