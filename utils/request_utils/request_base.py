@@ -49,7 +49,8 @@ class BaseRequest:
     def request_type(func_name, url, headers, data, request_type,cookies=None):
         params = {}
         if len(list(data.keys())) > 1:
-            params = data['params']
+            if not data['params']:
+                data['params'] = params
         if request_type == 'json':
             try:
                 res = requests.request(method=func_name,
