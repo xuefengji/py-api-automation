@@ -12,7 +12,7 @@ cases:
     is_depend: false
     depends_data:
     request_type: json
-    data:
+    parameters:
       data:
         username: 'admin'
         password: '123456'
