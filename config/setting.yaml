@@ -1,6 +1,10 @@
+# 环境信息：测试、正式、预发布，与环境配置文档中的一致即可
 environment: test
 
+# 测试报告通知类型：0表示默认邮件、1表示钉钉
+notification_type: 0
 
+# mysql 连接信息
 #mysql:
 #  host: '127.0.0.1',  # MySQL服务端的IP地址
 #  port: 3306,  # MySQL默认PORT地址(端口号)
@@ -8,8 +12,9 @@ environment: test
 #  password: 'xxxxx',  # 密码,也可以简写为passwd
 #  database: 'xxxxx',  # 库名称,也可以简写为db
 #  charset: 'utf8'
-#
-#
+
+
+# Email 信息
 #email:
 #  host: smtp.qq.com     #邮箱服务
 #  user:                 # 邮箱用户名
