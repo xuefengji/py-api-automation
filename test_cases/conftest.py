@@ -40,7 +40,7 @@ def case_skip(case_data):
 
 @pytest.fixture(scope="session", autouse=True)
 def get_host():
-    return ConfigGet.get_host()
+    return ConfigGet().get_host()
 
 # @pytest.fixture(scope="session", autouse=True)
 # def token_init():
