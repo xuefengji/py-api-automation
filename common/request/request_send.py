@@ -6,20 +6,17 @@
 # @Desc:
 
 import allure
-from utils.request_utils.request_base import BaseRequest
-
+from utils.request_utils.request_definition import BaseRequest
+from utils.request_utils.request_type import RequestType
 from utils.log_utils.log_decorate import LogDecorate
 
 
-class RequestSend(BaseRequest):
+class RequestSend(BaseRequest,RequestType):
 
     def __new__(cls, *args, **kwargs):
         if not hasattr(cls, "_instance"):
             cls._instance = super().__new__(cls)
         return cls._instance
-
-    def __init__(self):
-        super(BaseRequest, self).__init__()
 
     @LogDecorate(True)
     def send_request(self, case_info:dict, case_data:dict):
@@ -27,14 +24,16 @@ class RequestSend(BaseRequest):
         method = case_info['method']
         headers = case_data['headers']
         request_type = case_data['request_type']
-        data = case_data['parameters']
+        data = case_data['parameters']['data']
+        params = case_data['parameters']['params']
         if hasattr(RequestSend, method):
-            res = getattr(RequestSend, method)(
-                self,
-                url,
-                headers,
-                data,
-                request_type,
+            res = RequestSend.request_type(
+                method=method,
+                url=url,
+                headers=headers,
+                data=data,
+                params=params,
+                request_type=request_type,
                 cookies=None
             )
             with allure.step('发送{}请求'.format(method)):
