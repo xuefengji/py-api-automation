@@ -10,6 +10,7 @@ import random
 import requests
 from requests_toolbelt import MultipartEncoder
 from utils.enums_utils.request_type_enum import RequestTypeEnum
+from utils.log_utils.log_control import ERROR
 
 class RequestType:
 
@@ -72,6 +73,7 @@ class RequestType:
                                    verify=False)
             return res
         except Exception as e:
+            ERROR.error("发送 {} 请求失败:{}".format(method,e))
             raise ValueError("发送 {} 请求失败！".format(method))
 
     @classmethod
@@ -95,6 +97,7 @@ class RequestType:
                 cookies=cookies
             )
         except Exception as e:
+            ERROR.error("发送 {} 请求失败:{}".format(method,e))
             raise ValueError("发送 {} 请求失败！".format(method))
         return res
 
@@ -119,6 +122,7 @@ class RequestType:
                                    verify=False)
             return res
         except Exception as e:
+            ERROR.error("发送 {} 请求失败:{}".format(method,e))
             raise ValueError("发送 {} 请求失败！".format(method))
 
     @classmethod
@@ -144,4 +148,5 @@ class RequestType:
             )
             return res
         except Exception as e:
+            ERROR.error("发送 {} 请求失败:{}".format(method, e))
             raise ValueError("发送 {} 请求失败！".format(method))
