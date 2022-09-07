@@ -8,14 +8,18 @@
 
 class BaseRequest():
 
+    @classmethod
     def get(cls):
         pass
 
+    @classmethod
     def post(cls):
         pass
 
+    @classmethod
     def put(cls):
         pass
 
+    @classmethod
     def delete(cls):
         pass
