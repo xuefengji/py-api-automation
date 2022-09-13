@@ -9,7 +9,7 @@
 class AssertType:
 
     @classmethod
-    def equal(cls, expect, actual):
+    def equals(cls, expect, actual):
         assert expect==actual
 
     @classmethod
