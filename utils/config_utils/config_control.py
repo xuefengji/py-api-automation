@@ -14,7 +14,6 @@ class ConfigGet(BaseConfig):
     def __init__(self):
         self.yaml_data = OperationYaml.read_yaml(ConfigGet.setting_dir)
 
-
     def get_environment(self, environment: str) -> dict:
         """
         获取相应环境信息
@@ -29,7 +28,7 @@ class ConfigGet(BaseConfig):
     def get_host(self) -> str:
         # print(cls.setting_dir)
         environment = self.yaml_data['environment']
-        return self.get_environment(str(environment))['host']
+        return str(self.get_environment(str(environment)))
 
     #获取 email 信息
 
