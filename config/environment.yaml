@@ -1,10 +1,8 @@
 # 测试环境
-test:
-  host: https://127.0.0.1
+test: https://127.0.0.1
 
 
 
 # 正式环境
-product:
-  host: https://127.0.0.1
+product: https://127.0.0.1
 
