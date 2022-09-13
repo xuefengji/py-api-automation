@@ -6,14 +6,22 @@
 # @Desc:
 
 from common.asserts.assert_type import AssertType
-
+from utils.enums_utils.assert_enum import AssertEnum
 
 
 class Assert(AssertType):
+
     @classmethod
-    def expect_check(cls,expect,actual,type):
-        if type=="==":
-            cls.equal(expect, actual)
+    def expect_check(cls,expect, actual, type):
+        if type in AssertEnum._value2member_map_:
+            function = AssertEnum(type).name
+            if hasattr(AssertType, function):
+                getattr(AssertType, function)(expect, actual)
+            raise ValueError("相关断言函数不存在")
+        raise ValueError("断言类型不存在")
+
+
+
 
 
 
