@@ -18,5 +18,5 @@ class CaseEnum(Enum):
     IS_DEPEND = 'is_depend'
     DEPENDS_DATA = 'depends_data'
     REQUEST_TYPE = 'request_type'
-    PARAMETERS = 'parameters'
+    data = 'data'
     ENCODE = 'encode'
