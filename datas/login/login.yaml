@@ -4,7 +4,8 @@ info:
 
 
 cases:
-  - is_run: true
+  - id: login_01
+    is_run: true
     title: "登录成功"
     headers:
       Content-Type: application/json
@@ -12,10 +13,11 @@ cases:
     is_depend: false
     depends_data:
     request_type: json
-    parameters:
-      data:
+    data:
+      body:
         username: 'admin'
         password: '123456'
+      params:
     encode:
     assert:
       assert_type: response
@@ -23,17 +25,19 @@ cases:
       type: ==
       expect: "success"
 
-  - is_run: false
+  - id: login_02
+    is_run: false
     title: 用户名错误
     headers:
       Content_Type: application/json
     is_depend: false
     depends_data:
     request_type: json
-    parameters:
-      data:
+    data:
+      body:
         name: admin1
         password: '123456'
+      params:
     encode:
     assert:
       assert_type: response
