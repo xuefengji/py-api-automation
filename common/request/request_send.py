@@ -24,8 +24,8 @@ class RequestSend(BaseRequest,RequestType):
         method = case_info['method']
         headers = case_data['headers']
         request_type = case_data['request_type']
-        data = case_data['parameters']['data']
-        params = case_data['parameters']['params']
+        data = case_data['data']['body']
+        params = case_data['data']['params']
         if hasattr(RequestSend, method):
             res = RequestSend.request_type(
                 method=method,

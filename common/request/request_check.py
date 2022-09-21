@@ -36,7 +36,7 @@ class Check:
         """
         # print(case_data)
         encode_data = data['encode']
-        case_data = data['parameters']
+        case_data = data['data']
         # 校验是否有依赖数据
         for k, v in case_data.items():
             if v:
@@ -78,7 +78,9 @@ class Check:
         :return:
         """
         headers = data['headers']
-        try:
+        if headers == 'null':
+            headers = {}
+        if headers:
             for k, v in headers.items():
                 if v.startswith('$'):
                     if k == 'Authorization':
@@ -87,9 +89,8 @@ class Check:
                         headers[k] = jsonpath(data, v)[0]
                 elif v.startswith('cache'):
                     headers[k] = OperationCache.read_cache(BaseConfig.root_dir+v.split('.')[0]+'/'+v.split('.')[1])
-            return data
-        except Exception as e:
-            raise ValueError("check headers 失败")
+        return data
+
 
     @staticmethod
     def encode(data:str):
