@@ -9,8 +9,9 @@ import os
 import random
 import requests
 from requests_toolbelt import MultipartEncoder
-from utils.enums_utils.request_type_enum import RequestTypeEnum
+from utils.data_utils.enums.request_type_enum import RequestTypeEnum
 from utils.log_utils.log_control import ERROR
+
 
 class RequestType:
 
