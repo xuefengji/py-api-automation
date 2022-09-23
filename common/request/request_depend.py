@@ -15,7 +15,7 @@ from common.request.request_teardown import TearDown
 from common.request.request_check import Check
 
 
-class SetUp():
+class Depend():
 
     @classmethod
     def request_init(cls, info:dict, data:dict, host:str):
@@ -42,7 +42,7 @@ class SetUp():
                     cases = yaml_data['cases']
                     case_data = cases[int(depends_case)]
                     if case_data['is_depend']:
-                        SetUp.request_init(case_info, case_data)
+                        Depend.request_init(case_info, case_data)
                     res = RequestSend().send_request(case_info, case_data)
                     check_data['depends_data'] = TearDown.get_depend_data(res, depends_data)
                     check_info, check_data = Check.check(check_info, check_data)
