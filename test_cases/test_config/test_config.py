@@ -9,7 +9,7 @@ import os
 import pytest
 from utils.file_utils.operation_yaml import OperationYaml
 from config import BaseConfig
-from common.request.request_depend import SetUp
+from common.request.request_depend import Depend
 from common.request.request_teardown import TearDown
 
 
@@ -21,7 +21,7 @@ case_info = yaml_data['info']
 class TestConfig():
     @pytest.mark.parametrize("case_data", case_data)
     def test_config(self,case_data, case_skip, get_host):
-        res = SetUp.request_init(case_info, case_data, get_host)
+        res = Depend.request_init(case_info, case_data, get_host)
         check_data = TearDown().get_assert_jsonpath(case_data['assert'], res)
         TearDown().assert_actual(check_data)
         # print(type(res))

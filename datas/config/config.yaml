@@ -13,9 +13,10 @@ cases:
     cookies:
     is_depend: true
     depends_data:
-      - depends_case: login_01
-        depends_data_type: response
-        depends_data: $.data.access_token
+      - depend_case_id: login_01
+        depends_case_data:
+         - depends_data_type: response
+           json_path: $.data.access_token
     request_type: params
     data:
       body:
