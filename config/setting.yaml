@@ -1,27 +1,38 @@
-# 环境信息：测试、正式、预发布，与环境配置文档中的一致即可
-environment: test
+# 项目信息
+project: xxx 项目测试
+
+# 测试执行人
+tester: 小小月芽儿
+
+# 环境信息：测试、正式、预发布地址
+env: 127.0.0.1
 
 # 测试报告通知类型：0表示默认邮件、1表示钉钉
 notification_type: 0
 
+# 缓存方式: local表示本地存储，redis表示redis存储
+cache_type: local
+
 # mysql 连接信息
-#mysql:
-#  host: '127.0.0.1',  # MySQL服务端的IP地址
-#  port: 3306,  # MySQL默认PORT地址(端口号)
-#  user: 'xxxxx',  # 用户名
-#  password: 'xxxxx',  # 密码,也可以简写为passwd
-#  database: 'xxxxx',  # 库名称,也可以简写为db
-#  charset: 'utf8'
+mysql:
+  host: '127.0.0.1',  # MySQL服务端的IP地址
+  port: 3306,  # MySQL默认PORT地址(端口号)
+  user: 'root',  # 用户名
+  password: '123456',  # 密码,也可以简写为passwd
+  database: 'test',  # 库名称,也可以简写为db
+  charset: 'utf8'
 
 
 # Email 信息
-#email:
-#  host: smtp.qq.com     #邮箱服务
-#  user:                 # 邮箱用户名
-#  key:                  # 邮箱鉴权 key
+email:
+  host: smtp.qq.com     #邮箱服务
+  user: 123456@qq.com   # 邮箱用户名
+  key:  qweefedvdgrbf   # 邮箱鉴权 key
+  recevies: 12345678@qq.com   # 收件人，可以配置多个收件人
 #  recevies:
-#    - 12345678@qq.com
+#   - 12345678@qq.com
 
+# 钉钉通知信息
 ding_talk:
   webhook:
   secret:
