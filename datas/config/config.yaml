@@ -10,13 +10,7 @@ cases:
     headers:
       Content-Type: application/json
       Authorization: $.depends_data.depends_data
-    cookies:
-    is_depend: true
-    depends_data:
-      - depend_case_id: login_01
-        depends_case_data:
-         - depends_data_type: response
-           json_path: $.data.access_token
+      cookie:
     request_type: params
     data:
       body:
@@ -26,14 +20,26 @@ cases:
         sort: ''
       params:
     encode:
-        - $.data.body.filter
-        - $.data.body.sort
+      - $.data.body.filter
+      - $.data.body.sort
+    is_depend: true
+    depends_case:
+      - case_is: login_01
+        depends_data:
+         - type: response
+           json_path: $.data.access_token
+    setup_sql:
+    set_cache:
+      - name:
+        type:
+        json_path:
+
     assert:
       assert_type: response
       actual: $.message
       type: ==
       expect: "success"
-
+    assert_sql:
 
 
 

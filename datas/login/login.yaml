@@ -9,9 +9,7 @@ cases:
     title: "登录成功"
     headers:
       Content-Type: application/json
-    cookies:
-    is_depend: false
-    depends_data:
+      cookie:
     request_type: json
     data:
       body:
@@ -19,31 +17,55 @@ cases:
         password: '123456'
       params:
     encode:
+    is_depend: false
+    depends_case:
+      - case_id:
+        depends_data:
+          - type:
+            json_path:
+    setup_sql:
+    set_cache:
+      - name:
+        type:
+        json_path:
+
     assert:
       assert_type: response
       actual: $.message
       type: ==
       expect: "success"
+    assert_sql:
 
   - id: login_02
-    is_run: false
-    title: 用户名错误
+    is_run: true
+    title: "登录成功"
     headers:
-      Content_Type: application/json
-    is_depend: false
-    depends_data:
+      Content-Type: application/json
+      cookie:
     request_type: json
     data:
       body:
-        name: admin1
+        username: 'admin'
         password: '123456'
       params:
     encode:
+    is_depend: false
+    depends_case:
+      - case_id:
+        depends_data:
+          - type:
+            json_path:
+    setup_sql:
+    set_cache:
+      - name:
+        type:
+        json_path:
+
     assert:
       assert_type: response
       actual: $.message
       type: ==
-      expect: "登录授权失败"
-
+      expect: "success"
+    assert_sql:
 
 
