@@ -6,7 +6,7 @@
 # @Desc:
 
 from pydantic import BaseModel
-from typing import Union, List
+from typing import Union, List, Dict, Optional
 
 
 class Host(BaseModel):
@@ -20,7 +20,7 @@ class MySqlConf(BaseModel):
     user: str
     password: str
     database: str
-    charset: str = 'utf8'
+    charset: Optional[str] = 'utf8'
 
 
 class EmailConf(BaseModel):
@@ -45,5 +45,61 @@ class Config(BaseModel):
     mysql: MySqlConf
     email: EmailConf
     ding_talk: DingTalkConf
+
+
+class RequestData(BaseModel):
+    body: Dict = {}
+    params: Dict = {}
+
+
+class DependData(BaseModel):
+    type: str
+    json_path: str
+
+
+class DependsCase(BaseModel):
+    case_id: str
+    depends_data: List[DependData]
+
+
+class SetCache(BaseModel):
+    name: str
+    type: str
+    json_path: str
+
+
+class AssertData(BaseModel):
+    assert_type: str
+    actual: str
+    type: str
+    expect: str
+
+
+class TestCaseData(BaseModel):
+    id: str
+    is_run: bool
+    title: str
+    headers: Dict = {}
+    request_type: str
+    data: RequestData
+    encode: Optional[Union[List, None]] = None
+    is_depend: Union[bool, None] = False
+    depends_case: Optional[Union[List[DependsCase], None]]=None
+    setup_sql: Optional[str, List[str], None] = None
+    set_cache: Optional[Union[List[SetCache], None]] = None
+    assert_data: Union[Dict[AssertData], str]
+    assert_sql: Optional[str, List[str]] = None
+
+
+class TestCaseInfo(BaseModel):
+    url: str
+    method: str
+
+
+class TestCase(BaseModel):
+    info: TestCaseInfo
+    case: TestCaseData
+
+
 
 
