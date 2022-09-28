@@ -33,8 +33,7 @@ cases:
       - name:
         type:
         json_path:
-
-    assert:
+    assert_data:
       assert_type: response
       actual: $.message
       type: ==
