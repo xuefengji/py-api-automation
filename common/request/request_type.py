@@ -25,7 +25,6 @@ class RequestType:
             data,
             params,
             headers,
-            cookies
     ):
 
         request_type_mapping = {
@@ -40,7 +39,6 @@ class RequestType:
             data=data,
             params=params,
             headers=headers,
-            cookies=cookies
         )
         return res
 
@@ -53,7 +51,6 @@ class RequestType:
         data,
         params,
         headers,
-        cookies
     ):
         files = data
         for k, v in files.items():
@@ -70,7 +67,6 @@ class RequestType:
                                    data=enc,
                                    params=params,
                                    headers=headers,
-                                   cookies=cookies,
                                    verify=False)
             return res
         except Exception as e:
@@ -85,8 +81,7 @@ class RequestType:
         url,
         data,
         params,
-        headers,
-        cookies
+        headers
     ):
         try:
             res = requests.request(
@@ -94,8 +89,7 @@ class RequestType:
                 url=url,
                 json=data,
                 params=params,
-                headers=headers,
-                cookies=cookies
+                headers=headers
             )
         except Exception as e:
             ERROR.error("发送 {} 请求失败:{}".format(method,e))
@@ -111,7 +105,6 @@ class RequestType:
         data,
         params,
         headers,
-        cookies
     ):
         try:
             res = requests.request(method=method,
@@ -119,7 +112,6 @@ class RequestType:
                                    headers=headers,
                                    json=data,
                                    params=params,
-                                   cookies=cookies,
                                    verify=False)
             return res
         except Exception as e:
@@ -134,8 +126,7 @@ class RequestType:
         url,
         data,
         params,
-        headers,
-        cookies
+        headers
     ):
         try:
             res = requests.request(
@@ -144,7 +135,6 @@ class RequestType:
                 data=data,
                 params=params,
                 headers=headers,
-                cookies=cookies,
                 verify=False
             )
             return res
