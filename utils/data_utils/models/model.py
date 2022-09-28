@@ -77,7 +77,7 @@ class AssertData(BaseModel):
 
 class TestCaseData(BaseModel):
     id: str
-    is_run: bool
+    is_run: Union[bool, None] = None
     title: str
     headers: Dict = {}
     request_type: str
