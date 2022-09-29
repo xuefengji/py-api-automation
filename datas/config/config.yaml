@@ -24,7 +24,7 @@ cases:
       - $.data.body.sort
     is_depend: true
     depends_case:
-      - case_is: login_01
+      - case_id: login_01
         depends_data:
          - type: response
            json_path: $.data.access_token
