@@ -12,6 +12,7 @@ from utils.data_utils.models.model import TestCase, TestCaseInfo, TestCaseData
 from utils.log_utils.log_decorate import LogDecorate
 from utils import config
 
+
 class RequestHandle(BaseRequest, RequestType):
 
     def __new__(cls, *args, **kwargs):
@@ -24,14 +25,17 @@ class RequestHandle(BaseRequest, RequestType):
             info=TestCaseInfo(**case_info),
             case=TestCaseData(**case_data)
         )
+        self._case_data.info.url = config.host + self._case_data.info.url
 
     @LogDecorate(True)
     def send_request(self):
         if self._case_data.case.is_run is True or None:
             if hasattr(RequestHandle, self._case_data.info.method):
+                if self._case_data.case.is_depend:
+                    pass
                 res = RequestHandle.request_type(
                     method=self._case_data.info.method,
-                    url=config.host + self._case_data.info.url,
+                    url=self._case_data.info.url,
                     headers=self._case_data.case.headers,
                     data=self._case_data.case.data.body,
                     params=self._case_data.case.data.params,
