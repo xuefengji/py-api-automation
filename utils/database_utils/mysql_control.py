@@ -7,7 +7,9 @@
 
 import pymysql
 import traceback
+from typing import List
 from utils.log_utils.log_control import ERROR
+
 
 
 
@@ -28,23 +30,50 @@ class MySQL:
             self.cursor.close()
             self.conn.close()
 
-
-    def execute_sql(self, sql_query):
+    def execute(self, sql):
         """
-        sql 查询
+        update、delete、insert操作
         :param sql: sql 语句
-        :return:
+        :return: 影响的行数
         """
         try:
-            self.cursor.execute(sql_query)
+            rows = self.cursor.execute(sql)
+            self.conn.commit()
+            return rows
+        except Exception:
+            self.conn.rollback()    # 发生错误时回滚
+            ERROR.error(f"sql语句执行失败，错误信息：{traceback.format_exc()}")
+            raise
+
+    def query(self, sql, type='all'):
+        """
+        select 查询操作
+        :param sql: sql 语句
+        :param type: 查询的数据条目，all表示全部，one 表示一条
+        """
+        try:
+            flag = self.execute(sql)
+            if flag:
+                if type == 'one':
+                    data = self.cursor.fetchone()
+                else:
+                    data = self.cursor.fetchall()
+                return data
         except Exception:
             ERROR.error(f"sql语句执行失败，错误信息：{traceback.format_exc()}")
-        else:
-            return True
 
-    def select(self, sql):
-        flag = self.execute_sql(sql)
-        if flag:
-            data = self.cursor.fetchone()
+
+class SetUpSql(MySQL):
+    """处理依赖前置sql"""
+    def set_up_sql(self, sql:List):
+        if sql:
+            data = {}
+            for i in sql:
+                if i[0:6].upper() == 'SELECT':
+                    sql_data = self.query(i)
+                    for key, value in sql_data.items():
+                        data[key]=value
+                else:
+                    self.execute(i)
             return data
 
