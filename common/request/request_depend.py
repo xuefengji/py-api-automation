@@ -44,8 +44,9 @@ class Depend():
             for depends_case in depends_cases:
                 case_id = depends_case.case_id
                 depends_data = depends_case.depends_data
-                if case_id:
+                if case_id == 'sql':
                     pass
+
 
 
         if is_run:
