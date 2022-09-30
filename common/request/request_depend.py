@@ -15,6 +15,7 @@ from common.request.request_teardown import TearDown
 from common.request.request_check import Check
 from utils.data_utils.models.model import TestCase
 
+
 class Depend():
 
     def __new__(cls, *args, **kwargs):
@@ -24,6 +25,10 @@ class Depend():
 
     def __init__(self, yaml_case: TestCase):
         self._case = yaml_case
+
+    #TODO 前置sql数据操作
+    def set_up_sql_depend(self):
+        pass
 
     def depend_init(self):
         """
@@ -45,7 +50,8 @@ class Depend():
                 case_id = depends_case.case_id
                 depends_data = depends_case.depends_data
                 if case_id == 'sql':
-                    pass
+                    self.set_up_sql_depend()
+
 
 
 
