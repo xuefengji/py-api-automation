@@ -48,8 +48,8 @@ class Config(BaseModel):
 
 
 class RequestData(BaseModel):
-    body: Dict = {}
-    params: Dict = {}
+    body: Optional[Union[Dict, None]] = None
+    params: Optional[Union[Dict, None]] = None
 
 
 class DependData(BaseModel):
@@ -82,7 +82,7 @@ class TestCaseData(BaseModel):
     headers: Dict = {}
     request_type: str
     data: RequestData
-    encode: Optional[Union[List, None]] = None
+    encode: Optional[Union[List, str, None]] = None
     is_depend: Union[bool, None] = False
     depends_case: Optional[Union[List[DependsCase], None]]=None
     setup_sql: Optional[str, List[str], None] = None
