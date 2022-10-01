@@ -48,8 +48,9 @@ class Config(BaseModel):
 
 
 class RequestData(BaseModel):
-    body: Optional[Union[Dict, None]] = None
+    data: Optional[Union[Dict, None]] = None
     params: Optional[Union[Dict, None]] = None
+    file: Optional[Union[Dict, None]] = None
 
 
 class DependData(BaseModel):
