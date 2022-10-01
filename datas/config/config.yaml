@@ -13,7 +13,7 @@ cases:
       cookie:
     request_type: params
     data:
-      body:
+      data:
         start: 0
         limit: 10
         filter: ''

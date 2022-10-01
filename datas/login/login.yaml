@@ -12,10 +12,11 @@ cases:
       cookie:
     request_type: json
     data:
-      body:
+      data:
         username: 'admin'
         password: '123456'
       params:
+      file:
     encode:
     is_depend: false
     depends_case:
