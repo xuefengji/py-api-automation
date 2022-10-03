@@ -25,6 +25,10 @@ class Depend():
     def __init__(self, yaml_case: TestCase):
         self._case = yaml_case
 
+    #TODO
+    def depend_set_up_sql(self):
+        pass
+
     def depend_init(self):
         """
         请求前准备
@@ -45,6 +49,8 @@ class Depend():
                 case_id = depends_case.case_id
                 depends_data = depends_case.depends_data
                 if case_id == 'sql':
+                    self.depend_set_up_sql()
+                else:
                     pass
 
 
