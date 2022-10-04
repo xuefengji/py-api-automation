@@ -24,7 +24,7 @@ class BaseConfig:
     # 测试用例数据路径
     data_dir = os.path.join(root_dir, 'datas')
 
-    cache_dir = os.path.join(root_dir, 'cache')
+    cache_dir = os.path.join(root_dir, 'cache_utils')
     if not os.path.exists(cache_dir):
         os.mkdir(cache_dir)
 
