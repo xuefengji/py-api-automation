@@ -19,6 +19,7 @@ cases:
         filter: ''
         sort: ''
       params:
+      file:
     encode:
       - $.data.body.filter
       - $.data.body.sort
