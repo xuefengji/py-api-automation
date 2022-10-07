@@ -4,69 +4,69 @@ info:
 
 
 cases:
-  - id: login_01
-    is_run: true
-    title: "登录成功"
-    headers:
-      Content-Type: application/json
-      cookie:
-    request_type: json
-    data:
+  - login_01:
+      is_run: true
+      title: "登录成功"
+      headers:
+        Content-Type: application/json
+        cookie:
+      request_type: json
       data:
-        username: 'admin'
-        password: '123456'
-      params:
-      file:
-    encode:
-    is_depend: false
-    depends_case:
-      - case_id:
-        depends_data:
-          - type:
-            json_path:
-    setup_sql:
-    set_cache:
-      - name:
-        type:
-        json_path:
+        data:
+          username: 'admin'
+          password: '123456'
+        params:
+        file:
+      encode:
+      is_depend: false
+      depends_case:
+        - case_id:
+          depends_data:
+            - type:
+              json_path:
+      setup_sql:
+      set_cache:
+        - name:
+          type:
+          json_path:
 
-    assert:
-      assert_type: response
-      actual: $.message
-      type: ==
-      expect: "success"
-    assert_sql:
+      assert:
+        assert_type: response
+        actual: $.message
+        type: ==
+        expect: "success"
+      assert_sql:
 
-  - id: login_02
-    is_run: true
-    title: "登录成功"
-    headers:
-      Content-Type: application/json
-      cookie:
-    request_type: json
-    data:
-      body:
-        username: 'admin'
-        password: '123456'
-      params:
-    encode:
-    is_depend: false
-    depends_case:
-      - case_id:
-        depends_data:
-          - type:
-            json_path:
-    setup_sql:
-    set_cache:
-      - name:
-        type:
-        json_path:
+  - login_02:
+      is_run: true
+      title: "登录成功"
+      headers:
+        Content-Type: application/json
+        cookie:
+      request_type: json
+      data:
+        body:
+          username: 'admin'
+          password: '123456'
+        params:
+      encode:
+      is_depend: false
+      depends_case:
+        - case_id:
+          depends_data:
+            - type:
+              json_path:
+      setup_sql:
+      set_cache:
+        - name:
+          type:
+          json_path:
 
-    assert:
-      assert_type: response
-      actual: $.message
-      type: ==
-      expect: "success"
-    assert_sql:
+      assert:
+        assert_type: response
+        actual: $.message
+        type: ==
+        expect: "success"
+      assert_sql:
 
 

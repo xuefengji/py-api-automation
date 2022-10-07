@@ -4,42 +4,42 @@ info:
 
 
 cases:
-  - id: record_01
-    is_run: true
-    title: "获取系列"
-    headers:
-      Content-Type: application/json
-      Authorization: $.depends_data.depends_data
-      cookie:
-    request_type: params
-    data:
+  - record_01:
+      is_run: true
+      title: "获取系列"
+      headers:
+        Content-Type: application/json
+        Authorization: $.depends_data.depends_data
+        cookie:
+      request_type: params
       data:
-        start: 0
-        limit: 10
-        filter: ''
-        sort: ''
-      params:
-      file:
-    encode:
-      - $.data.body.filter
-      - $.data.body.sort
-    is_depend: true
-    depends_case:
-      - case_id: login_01
-        depends_data:
-         - type: response
-           json_path: $.data.access_token
-    setup_sql:
-    set_cache:
-      - name:
-        type:
-        json_path:
-    assert_data:
-      assert_type: response
-      actual: $.message
-      type: ==
-      expect: "success"
-    assert_sql:
+        data:
+          start: 0
+          limit: 10
+          filter: ''
+          sort: ''
+        params:
+        file:
+      encode:
+        - $.data.body.filter
+        - $.data.body.sort
+      is_depend: true
+      depends_case:
+        - case_id: login_01
+          depends_data:
+           - type: response
+             json_path: $.data.access_token
+      setup_sql:
+      set_cache:
+        - name:
+          type:
+          json_path:
+      assert_data:
+        assert_type: response
+        actual: $.message
+        type: ==
+        expect: "success"
+      assert_sql:
 
 
 
