@@ -48,21 +48,23 @@ class Config(BaseModel):
 
 
 class RequestData(BaseModel):
-    body: Optional[Union[Dict, None]] = None
-    params: Optional[Union[Dict, None]] = None
+    data: Optional[Union[Dict, None]] = None
+    param: Optional[Union[Dict, None]] = None
+    file: Optional[Union[Dict, None]] = None
 
 
-class DependData(BaseModel):
+class DependsData(BaseModel):
     type: str
-    json_path: str
+    data: str
+    set_cache: Optional[str]
 
 
 class DependsCase(BaseModel):
     case_id: str
-    depends_data: List[DependData]
+    depends_data: Union[None, List[DependsData]] = None
 
 
-class SetCache(BaseModel):
+class RequestSetCache(BaseModel):
     name: str
     type: str
     json_path: str
@@ -76,17 +78,18 @@ class AssertData(BaseModel):
 
 
 class TestCaseData(BaseModel):
-    id: str
-    is_run: Union[bool, None] = None
+    url: str
+    method: str
+    is_run: Union[bool, None] = False
     title: str
     headers: Dict = {}
     request_type: str
     data: RequestData
-    encode: Optional[Union[List, str, None]] = None
+    encode: Optional[Union[List, None]] = None
     is_depend: Union[bool, None] = False
     depends_case: Optional[Union[List[DependsCase], None]]=None
     setup_sql: Optional[str, List[str], None] = None
-    set_cache: Optional[Union[List[SetCache], None]] = None
+    request_set_cache: Optional[Union[List[RequestSetCache], None]] = None
     assert_data: Union[Dict[AssertData], str]
     assert_sql: Optional[str, List[str]] = None
 
