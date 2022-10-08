@@ -51,31 +51,32 @@ class Depend():
                 depends_data = depends_case.depends_data
                 if case_id == 'sql':
                     self.set_up_sql_depend()
+                else:
+                    pass
 
 
 
-
-        if is_run:
-            if is_depend:
-                depends = check_data['depends_data']
-                for depends_data in depends:
-                    depends_yaml = depends_data['depends_yaml']
-                    depends_case = depends_data['depends_case']
-                    yaml_data = OperationYaml.read_yaml(os.path.join(BaseConfig.data_dir, depends_yaml))
-                    case_info = yaml_data['info']
-                    case_info['url'] = host + case_info['url']
-                    cases = yaml_data['cases']
-                    case_data = cases[int(depends_case)]
-                    if case_data['is_depend']:
-                        Depend.depend_init(case_info, case_data)
-                    res = RequestSend().send_request(case_info, case_data)
-                    check_data['depends_data'] = TearDown.get_depend_data(res, depends_data)
-                    check_info, check_data = Check.check(check_info, check_data)
-                res = RequestSend().send_request(check_info, check_data)
-                return res
-            check_info, check_data = Check.check(check_info, check_data)
-            res = RequestSend().send_request(check_info, check_data)
-            return res
+        # if is_run:
+        #     if is_depend:
+        #         depends = check_data['depends_data']
+        #         for depends_data in depends:
+        #             depends_yaml = depends_data['depends_yaml']
+        #             depends_case = depends_data['depends_case']
+        #             yaml_data = OperationYaml.read_yaml(os.path.join(BaseConfig.data_dir, depends_yaml))
+        #             case_info = yaml_data['info']
+        #             case_info['url'] = host + case_info['url']
+        #             cases = yaml_data['cases']
+        #             case_data = cases[int(depends_case)]
+        #             if case_data['is_depend']:
+        #                 Depend.depend_init(case_info, case_data)
+        #             res = RequestSend().send_request(case_info, case_data)
+        #             check_data['depends_data'] = TearDown.get_depend_data(res, depends_data)
+        #             check_info, check_data = Check.check(check_info, check_data)
+        #         res = RequestSend().send_request(check_info, check_data)
+        #         return res
+        #     check_info, check_data = Check.check(check_info, check_data)
+        #     res = RequestSend().send_request(check_info, check_data)
+        #     return res
 
 
 
