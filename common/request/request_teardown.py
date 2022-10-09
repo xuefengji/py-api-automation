@@ -9,7 +9,7 @@
 import json
 from jsonpath import jsonpath
 from common.asserts.assert_base import Assert
-from utils.database_utils.mysql_control import MySQL
+from utils.database.mysql_control import MySQL
 from utils.config_utils.config_control import ConfigGet
 
 class TearDown:

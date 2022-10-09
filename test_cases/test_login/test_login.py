@@ -6,7 +6,7 @@
 # @Desc:
 
 import os, pytest
-from utils.file_utils.operation_yaml import OperationYaml
+from utils.file.operation_yaml import OperationYaml
 from config import BaseConfig
 from common.request.request_depend import Depend
 from common.request.request_teardown import TearDown

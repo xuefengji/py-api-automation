@@ -5,7 +5,7 @@
 # @File: report_summary.py
 # @Desc:
 import os
-from utils.file_utils.operation_json import OperationJson
+from utils.file.operation_json import OperationJson
 from config import BaseConfig
 
 class Summary:

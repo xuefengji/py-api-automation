@@ -6,7 +6,7 @@
 # @Desc:
 
 from common.asserts.assert_type import AssertType
-from utils.data_utils.enums.assert_enum import AssertEnum
+from utils.data.enums.enums import AssertEnum
 
 
 class Assert(AssertType):

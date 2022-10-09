@@ -7,15 +7,15 @@
 
 import pymysql
 import traceback
-from typing import List
-from utils.log_utils.log_control import ERROR
+from typing import List,Dict,Union
+from utils.log.log_control import ERROR
 
 
 
 
 class MySQL:
 
-    def __init__(self, config: dict):
+    def __init__(self, config: Dict):
         try:
             self.conn = pymysql.connect(**config)
             # 使用 cursor 方法获取操作游标，得到一个可以执行sql语句，并且操作结果为字典返回的游标
@@ -30,7 +30,7 @@ class MySQL:
             self.cursor.close()
             self.conn.close()
 
-    def execute(self, sql):
+    def execute(self, sql: str):
         """
         update、delete、insert操作
         :param sql: sql 语句
@@ -45,7 +45,7 @@ class MySQL:
             ERROR.error(f"sql语句执行失败，错误信息：{traceback.format_exc()}")
             raise
 
-    def query(self, sql, type='all'):
+    def query(self, sql: str, type='all'):
         """
         select 查询操作
         :param sql: sql 语句
@@ -65,15 +65,18 @@ class MySQL:
 
 class SetUpSql(MySQL):
     """处理依赖前置sql"""
-    def set_up_sql(self, sql:List):
+    def set_up_sql(self, sql: Union[List, None])->Dict:
         if sql:
-            data = {}
-            for i in sql:
-                if i[0:6].upper() == 'SELECT':
-                    sql_data = self.query(i)
-                    for key, value in sql_data.items():
-                        data[key]=value
-                else:
-                    self.execute(i)
-            return data
+            try:
+                data = {}
+                for i in sql:
+                    if i[0:6].upper() == 'SELECT':
+                        sql_data = self.query(sql=i)[0]
+                        for key, value in sql_data.items():
+                            data[key]=value
+                    else:
+                        self.execute(i)
+                return data
+            except Exception as exc:
+                raise ValueError("sql 数据查询失败，请检查setup_sql语句是否正确") from exc
 

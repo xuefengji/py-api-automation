@@ -5,8 +5,8 @@
 # @File: __init__.py
 # @Desc:
 
-from utils.data_utils.models.model import Config
-from utils.file_utils.operation_yaml import OperationYaml
+from utils.data.models.model import Config
+from utils.file.operation_yaml import OperationYaml
 from config import BaseConfig
 
 config_data = OperationYaml.read_yaml(BaseConfig.setting_dir)

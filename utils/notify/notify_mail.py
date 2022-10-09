@@ -8,9 +8,9 @@
 import smtplib
 from email.mime.text import MIMEText
 from email.header import Header
-from utils.file_utils.operation_yaml import OperationYaml
+from utils.file.operation_yaml import OperationYaml
 from config import BaseConfig
-from utils.report_utils.report_summary import Summary
+from utils.report.report_summary import Summary
 
 class SendMail:
 

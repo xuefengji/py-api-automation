@@ -9,8 +9,8 @@ import os.path
 from jsonpath import jsonpath
 from urllib.parse import quote
 from config import BaseConfig
-from utils.random_utils.random_data import RandomUtil
-from utils.file_utils.operation_cache import OperationCache
+from utils.random.random_data import RandomUtil
+from utils.file.operation_cache import OperationCache
 
 class Check:
 

@@ -10,9 +10,9 @@ import pytest
 import requests
 
 from config import BaseConfig
-from utils.config_utils.config_control import ConfigGet
-from utils.file_utils.operation_cache import OperationCache
-from utils.file_utils.operation_json import OperationJson
+from utils import config
+from utils.file.operation_cache import OperationCache
+from utils.file.operation_json import OperationJson
 
 
 def pytest_terminal_summary(terminalreporter):

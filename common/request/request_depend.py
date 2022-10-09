@@ -9,11 +9,11 @@
 import os
 
 from config import BaseConfig
-from utils.file_utils.operation_yaml import OperationYaml
+from utils.file.operation_yaml import OperationYaml
 from common.request.request_send import RequestHandle
 from common.request.request_teardown import TearDown
 from common.request.request_check import Check
-from utils.data_utils.models.model import TestCase
+from utils.data.models.model import TestCase
 
 
 class Depend():

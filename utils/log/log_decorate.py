@@ -5,7 +5,7 @@
 # @File: log_decorate.py
 # @Desc:
 
-from utils.log_utils.log_control import ERROR, INFO
+from utils.log.log_control import ERROR, INFO
 
 
 class LogDecorate():
