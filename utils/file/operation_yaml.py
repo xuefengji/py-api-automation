@@ -5,12 +5,13 @@
 # @File: operation_yaml.py
 # @Desc:
 import os, yaml
+from typing import Dict
 
 
 class OperationYaml:
 
     @classmethod
-    def read_yaml(cls,yaml_path:str)->dict:
+    def read_yaml(cls,yaml_path:str) -> Dict:
         """
         读取 yaml 内容
         :param yaml_path: yaml 文件路径
