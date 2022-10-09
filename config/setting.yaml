@@ -32,6 +32,11 @@ email:
 #  recevies:
 #   - 12345678@qq.com
 
+# redis 缓存配置
+redis:
+  host:
+  port:
+  db:
 
 # 钉钉通知信息
 ding_talk:
