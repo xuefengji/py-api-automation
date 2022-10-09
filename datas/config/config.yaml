@@ -1,45 +1,44 @@
-info:
+info: &info
   url: /api/sys/operation/audit/record/
   method: get
 
-
-cases:
-  - record_01:
-      is_run: true
-      title: "获取系列"
-      headers:
-        Content-Type: application/json
-        Authorization: $.depends_data.data
-        cookie:
-      request_type: params
-      data:
-        data:
-          start: 0
-          limit: 10
-          filter: ''
-          sort: ''
-        param:
-        file:
-      encode:
-        - $.data.body.filter
-        - $.data.body.sort
-      is_depend: true
-      depends_case:
-        - case_id: login_01
-          depends_data:
-           - type: response
-             data: $.data.access_token
-      setup_sql:
-      set_cache:
-        - name:
-          type:
-          json_path:
-      assert_data:
-        assert_type: response
-        actual: $.message
-        type: ==
-        expect: "success"
-      assert_sql:
+record_01:
+  <<: *info
+  is_run: true
+  title: "获取系列"
+  headers:
+    Content-Type: application/json
+    Authorization: $.depends_data.data
+    cookie:
+  request_type: params
+  data:
+    data:
+      start: 0
+      limit: 10
+      filter: ''
+      sort: ''
+    param:
+    file:
+  encode:
+    - $.data.body.filter
+    - $.data.body.sort
+  is_depend: true
+  depends_case:
+    - case_id: login_01
+      depends_data:
+       - type: response
+         data: $.data.access_token
+  setup_sql:
+  set_cache:
+    - name:
+      type:
+      json_path:
+  assert_data:
+    assert_type: response
+    actual: $.message
+    type: ==
+    expect: "success"
+  assert_sql:
 
 
 

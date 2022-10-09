@@ -4,57 +4,56 @@ info: &info
   method: post
 
 # 接口用例
-cases:
-  - login_01:
-      <<: *info
-      is_run: true
-      title: "登录成功"
-      headers:
-        Content-Type: application/json
-      request_type: json
-      data:
-        data:
-          username: 'admin'
-          password: '123456'
-        params:
-        file:
-      encode:
-      is_depend: false
-      depends_case:
-        - case_id:
-          depends_data:
-            - type:
-              data:
-              set_cache:
-      setup_sql:
-      request_set_cache:
-        - name:
-          type:
-          json_path:
-      assert:
-        assert_type: response
-        actual: $.message
-        type: ==
-        expect: "success"
-      assert_sql:
+login_01:
+  <<: *info
+  is_run: true
+  title: "登录成功"
+  headers:
+    Content-Type: application/json
+  request_type: json
+  data:
+    data:
+      username: 'admin'
+      password: '123456'
+    params:
+    file:
+  encode:
+  is_depend: false
+  depends_case:
+    - case_id:
+      depends_data:
+        - type:
+          data:
+          set_cache:
+  setup_sql:
+  request_set_cache:
+    - name:
+      type:
+      json_path:
+  assert:
+    assert_type: response
+    actual: $.message
+    type: ==
+    expect: "success"
+  assert_sql:
 
-  - login_02:
-      <<: *info
-      is_run: true
-      title: "登录失败"
-      headers:
-        Content-Type: application/json
-      request_type: json
-      data:
-        data:
-          username: 'admin1'
-          password: '123456'
-      is_depend: false
-      assert:
-        assert_type: response
-        actual: $.message
-        type: ==
-        expect: "success"
-      assert_sql:
+login_02:
+  <<: *info
+  is_run: true
+  title: "登录失败"
+  headers:
+    Content-Type: application/json
+  request_type: json
+  data:
+    data:
+      username: 'admin1'
+      password: '123456'
+  is_depend: false
+  assert:
+    assert_type: response
+    actual: $.message
+    type: ==
+    expect: "success"
+  assert_sql:
 
 
