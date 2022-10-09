@@ -1,16 +1,16 @@
 # 接口信息
-info:
+info: &info
   url: /auth/token
   method: post
 
 # 接口用例
 cases:
   - login_01:
+      <<: *info
       is_run: true
       title: "登录成功"
       headers:
         Content-Type: application/json
-        cookie:
       request_type: json
       data:
         data:
@@ -39,15 +39,15 @@ cases:
       assert_sql:
 
   - login_02:
+      <<: *info
       is_run: true
-      title: "登录成功"
+      title: "登录失败"
       headers:
         Content-Type: application/json
-        cookie:
       request_type: json
       data:
         data:
-          username: 'admin'
+          username: 'admin1'
           password: '123456'
       is_depend: false
       assert:
