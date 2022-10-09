@@ -8,8 +8,8 @@
 import allure
 from common.request.request_definition import BaseRequest
 from common.request.request_type import RequestType
-from utils.data_utils.models.model import TestCase, TestCaseInfo, TestCaseData
-from utils.log_utils.log_decorate import LogDecorate
+from utils.data.models.model import TestCase, TestCaseInfo, TestCaseData
+from utils.log.log_decorate import LogDecorate
 from utils import config
 
 
@@ -37,15 +37,15 @@ class RequestHandle(BaseRequest, RequestType):
                     method=self._case_data.info.method,
                     url=self._case_data.info.url,
                     headers=self._case_data.case.headers,
-                    data=self._case_data.case.data.body,
-                    params=self._case_data.case.data.params,
+                    data=self._case_data.case.data.data,
+                    params=self._case_data.case.data.param,
                     request_type=self._case_data.case.request_type,
                 )
                 with allure.step('发送{}请求'.format(self._case_data.info.method)):
                     allure.attach(name="当前请求url：", body=self._case_data.info.url)
 
                     allure.attach(name="当前请求headers：", body=str(self._case_data.case.headers))
-                    allure.attach(name="当前请求数据：", body=str(self._case_data.case.data.body))
+                    allure.attach(name="当前请求数据：", body=str(self._case_data.case.data.data))
                     allure.attach(name="当前请求结果：", body=str(res.status_code))
                 return res
             raise ValueError("当前请求方式不存在，请检查")
