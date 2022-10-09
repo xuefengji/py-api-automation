@@ -7,8 +7,8 @@
 
 import os, pytest
 from config import BaseConfig
-from utils.notify_utils.notify_mail import SendMail
-from utils.report_utils.report_summary import Summary
+from utils.notify.notify_mail import SendMail
+from utils.report.report_summary import Summary
 
 
 def main():
