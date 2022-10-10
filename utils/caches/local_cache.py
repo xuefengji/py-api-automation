@@ -18,10 +18,10 @@ class CacheHandle:
             _cache_data[name] = value
             return True
         except Exception as e:
-            raise ValueError('更新缓存失败')
+            raise ValueError('更新缓存失败') from e
 
     @classmethod
     def get_cache(cls, name: str) -> Any:
         if name in _cache_data.keys():
             return _cache_data[name]
-        raise ValueError('缓存不存在')
+        raise AttributeError("无该缓存名，请检查缓存名是否正确")
