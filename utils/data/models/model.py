@@ -49,6 +49,7 @@ class Config(BaseModel):
     env: str
     host: Host
     notification_type: int = 0
+    cache_type: int = 0
     mysql: MySqlConf
     email: EmailConf
     ding_talk: DingTalkConf
