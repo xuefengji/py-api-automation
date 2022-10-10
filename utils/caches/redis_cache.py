@@ -22,7 +22,7 @@ class RedisHandle:
             cls._instance = super().__new__(cls)
         return cls._instance
 
-    def hash_set(self, name: str, key: str, value: Any) -> None:
+    def hash_set(self, key: str, value: Any, name: str='case') -> None:
         """
         设置hash类型存储的数据
         param name:
