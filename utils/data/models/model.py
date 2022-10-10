@@ -35,6 +35,14 @@ class DingTalkConf(BaseModel):
     secret: str
 
 
+class RedisConf(BaseModel):
+    host: str
+    password: Optional[str]
+    port: int = 6379
+    db: Optional[int] = 0
+    decode_responses: Optional[bool] = True
+
+
 class Config(BaseModel):
     project_name: str
     tester: str
@@ -44,6 +52,7 @@ class Config(BaseModel):
     mysql: MySqlConf
     email: EmailConf
     ding_talk: DingTalkConf
+    redis: RedisConf
 
 
 class RequestData(BaseModel):
@@ -76,7 +85,7 @@ class AssertData(BaseModel):
     expect: str
 
 
-class TestCaseData(BaseModel):
+class TestCase(BaseModel):
     url: str
     method: str
     is_run: Union[bool, None] = False
@@ -97,10 +106,6 @@ class TestCaseInfo(BaseModel):
     url: str
     method: str
 
-
-class TestCase(BaseModel):
-    info: TestCaseInfo
-    case: TestCaseData
 
 
 
