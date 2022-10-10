@@ -25,10 +25,8 @@ class CaseData:
         _case_datas = OperationYaml.read_yaml(self.file_path)
         _case_lists = []
         for key, value in _case_datas.items():
-            if key == 'cases':
-                for case in value:
-                    for k, v in case:
-                        _case_lists.append({k: v})
+            if key != 'info':
+                _case_lists.append({key: value})
         return _case_lists
 
 
