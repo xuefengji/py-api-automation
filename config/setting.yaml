@@ -13,6 +13,9 @@ host:
 # 测试报告通知类型：0表示默认邮件、1表示钉钉
 notification_type: 0
 
+# 测试用例缓存地址: 0表示本地缓存、1表示redis缓存
+cache_type: 0
+
 # mysql 连接信息
 mysql:
   host: '127.0.0.1',  # MySQL服务端的IP地址
