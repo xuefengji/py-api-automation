@@ -6,24 +6,41 @@
 # @Desc: 封装 redis
 
 import redis
+from typing import Any
+from utils.data.models.model import RedisConf
 
 
 class RedisHandle:
-    def __init__(self, config):
-        self.conn = redis.Redis(**config)
+    def __init__(self, config: RedisConf):
+        try:
+         self.conn = redis.Redis(config)
+        except ConnectionError as e:
+            raise ConnectionError('Redis 连接失败') from e
 
     def __new__(cls, *args, **kwargs):
         if not hasattr(cls, "_instance"):
             cls._instance = super().__new__(cls)
         return cls._instance
 
-    def hash_set(self):
-        pass
+    def hash_set(self, name: str, key: str, value: Any) -> None:
+        """
+        设置hash类型存储的数据
+        param name:
+        param key:
+        param value:
+        """
+        self.conn.hset(name, key, value)
 
 
 
-r = redis.Redis(host='127.0.0.1', password='hgj%li46h@', port=6379, db=0, decode_responses=True)
-r.set('name', 'runoob')  # 设置 name 对应的值
-print(r['name'])
-print(r.get('name'))  # 取出键 name 对应的值
-print(type(r.get('name')))  # 查看类型
+    def hash_get(self, name, key):
+        """
+        hash类型单个值获取
+        param name:
+        param key:
+        """
+        res = self.conn.hget(name, key)
+        if res:
+            return res.decode()
+
+
