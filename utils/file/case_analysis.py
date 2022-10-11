@@ -21,6 +21,9 @@ class CaseHandle:
         return cls._instance
 
     def url_process(self, case_id:str, data: Dict) -> str:
+        """
+        拼接 host+url
+        """
         _url = data['url']
         _host = data['host']
         if _url is None or _host is None:
@@ -34,7 +37,7 @@ class CaseHandle:
 
     def case_handle(self):
         """
-        获取yaml文件中的用例，并处理 url
+        获取yaml文件中的用例
         """
         print(self.file_path)
         _case_datas = OperationYaml.read_yaml(self.file_path)
@@ -43,7 +46,7 @@ class CaseHandle:
         for key, value in _case_datas.items():
             if key != 'info':
                 _case_info = {
-                    'url': self.url_process(),
+                    'url': self.url_process(key, value),
                     'method': value['method'],
                     'is_run': value['is_run'],
                     'title': value['title'],
