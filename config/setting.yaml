@@ -6,9 +6,7 @@ tester: 小小月芽儿
 
 # 环境信息：测试、正式、预发布地址
 env: test
-host:
-  test: 127.0.0.1
-  proc: 127.0.0.1
+host: 127.0.0.1
 
 # 测试报告通知类型：0表示默认邮件、1表示钉钉
 notification_type: 0

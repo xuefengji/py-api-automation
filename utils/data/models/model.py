@@ -9,11 +9,6 @@ from pydantic import BaseModel
 from typing import Union, List, Dict, Optional
 
 
-class Host(BaseModel):
-    test: str
-    proc: str
-
-
 class MySqlConf(BaseModel):
     host: str
     port: int = 3306
@@ -47,7 +42,7 @@ class Config(BaseModel):
     project_name: str
     tester: str
     env: str
-    host: Host
+    host: str
     notification_type: int = 0
     cache_type: int = 0
     mysql: MySqlConf
