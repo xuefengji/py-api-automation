@@ -97,10 +97,10 @@ class TestCase(BaseModel):
     encode: Optional[Union[List, None]] = None
     is_depend: Union[bool, None] = False
     depends_case: Optional[Union[List[DependsCase], None]]=None
-    setup_sql: Optional[str, List[str], None] = None
+    setup_sql: Optional[Union[str, List[str], None]] = None
     request_set_cache: Optional[Union[List[RequestSetCache], None]] = None
-    assert_data: Union[Dict[AssertData], str]
-    assert_sql: Optional[str, List[str]] = None
+    assert_data: AssertData
+    assert_sql: Optional[Union[str, List[str], None]] = None
 
 
 class TestCaseInfo(BaseModel):
