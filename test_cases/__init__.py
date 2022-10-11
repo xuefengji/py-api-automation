@@ -8,7 +8,7 @@
 
 from utils.file.get_all_case_files import get_all_files
 from config import BaseConfig
-from utils.file.yaml_data_analysis import CaseHandle
+from utils.file.case_analysis import CaseHandle
 from utils.caches.redis_cache import RedisHandle
 from utils import config
 from utils.caches.local_cache import CacheHandle, _cache_data
