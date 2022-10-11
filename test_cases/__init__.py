@@ -21,7 +21,7 @@ def case_set_cache():
     _files_list = get_all_files(BaseConfig.data_dir)
     if _files_list:
         for file in _files_list:
-            _case_data = CaseHandle(file).get_case()
+            _case_data = CaseHandle(file).case_handle()
             if _case_data:
                 for case in _case_data:
                     for k, v in case.items():
