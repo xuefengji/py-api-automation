@@ -18,11 +18,11 @@ cache_type: 0
 
 # mysql 连接信息
 mysql:
-  host: '127.0.0.1',  # MySQL服务端的IP地址
-  port: 3306,  # MySQL默认PORT地址(端口号)
-  user: 'root',  # 用户名
-  password: '123456',  # 密码,也可以简写为passwd
-  database: 'test',  # 库名称,也可以简写为db
+  host: '127.0.0.1' # MySQL服务端的IP地址
+  port: 3306  # MySQL默认PORT地址(端口号)
+  user: 'root'  # 用户名
+  password: '123456'  # 密码,也可以简写为passwd
+  database: 'test' # 库名称,也可以简写为db
   charset: 'utf8'
 
 
@@ -37,12 +37,12 @@ email:
 
 # redis 缓存配置
 redis:
-  host:
-  port:
-  db:
+  host: '127.0.0.1'
+  port: 6379
+  db: 0
 
 # 钉钉通知信息
 ding_talk:
-  webhook:
-  secret:
+  webhook: WQEEWFREWGFDG
+  secret: QWEWRWER
 
