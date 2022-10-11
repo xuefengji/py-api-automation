@@ -1,5 +1,6 @@
 # 接口信息
 info: &info
+  host: ${{host()}}
   url: /auth/token
   method: post
 
