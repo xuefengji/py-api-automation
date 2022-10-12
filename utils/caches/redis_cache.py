@@ -22,7 +22,7 @@ class RedisHandle:
             cls._instance = super().__new__(cls)
         return cls._instance
 
-    def hash_set(self, key: str, value: Any, name: str='case') -> None:
+    def hash_set(self, key: str, value: Any, name: str='cases') -> None:
         """
         设置hash类型存储的数据
         param name:
@@ -33,7 +33,7 @@ class RedisHandle:
 
 
 
-    def hash_get(self, name, key):
+    def hash_get(self, key, name='cases'):
         """
         hash类型单个值获取
         param name:
@@ -41,6 +41,6 @@ class RedisHandle:
         """
         res = self.conn.hget(name, key)
         if res:
-            return res.decode()
+            return res
 
 
