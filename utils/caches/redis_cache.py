@@ -6,14 +6,14 @@
 # @Desc: 封装 redis
 
 import redis
-from typing import Any
+from typing import Any, Dict
 from utils.data.models.model import RedisConf
 
 
 class RedisHandle:
-    def __init__(self, config: RedisConf):
+    def __init__(self, config: Dict):
         try:
-         self.conn = redis.Redis(config)
+         self.conn = redis.Redis(RedisConf(**config))
         except ConnectionError as e:
             raise ConnectionError('Redis 连接失败') from e
 
@@ -22,7 +22,7 @@ class RedisHandle:
             cls._instance = super().__new__(cls)
         return cls._instance
 
-    def hash_set(self, key: str, value: Any, name: str='case') -> None:
+    def hash_set(self, key: str, value: Any, name: str='cases') -> None:
         """
         设置hash类型存储的数据
         param name:
@@ -31,9 +31,7 @@ class RedisHandle:
         """
         self.conn.hset(name, key, value)
 
-
-
-    def hash_get(self, name, key):
+    def hash_get(self, key, name='cases'):
         """
         hash类型单个值获取
         param name:
@@ -41,6 +39,6 @@ class RedisHandle:
         """
         res = self.conn.hget(name, key)
         if res:
-            return res.decode()
+            return res
 
 

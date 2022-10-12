@@ -9,11 +9,6 @@ from pydantic import BaseModel
 from typing import Union, List, Dict, Optional
 
 
-class Host(BaseModel):
-    test: str
-    proc: str
-
-
 class MySqlConf(BaseModel):
     host: str
     port: int = 3306
@@ -47,7 +42,7 @@ class Config(BaseModel):
     project_name: str
     tester: str
     env: str
-    host: Host
+    host: str
     notification_type: int = 0
     cache_type: int = 0
     mysql: MySqlConf
@@ -64,7 +59,7 @@ class RequestData(BaseModel):
 
 class DependsData(BaseModel):
     type: str
-    data: str
+    depend_data: str
     set_cache: Optional[str]
 
 
@@ -86,6 +81,27 @@ class AssertData(BaseModel):
     expect: str
 
 
+class Prepare(BaseModel):
+    depend_type: str
+    json_path: str
+    set_cache: str
+
+
+class SendRequest(BaseModel):
+    depend_type: str
+    json_path: Optional[str]
+    cache_key: Optional[str]
+    replace_key: Optional[str]
+    set_cache: Optional[str]
+
+
+class TearDown(BaseModel):
+    case_id: str
+    prepare: Optional[List[Prepare]]
+    send_request: Optional[List[SendRequest]]
+
+
+
 class TestCase(BaseModel):
     url: str
     method: str
@@ -99,8 +115,11 @@ class TestCase(BaseModel):
     depends_case: Optional[Union[List[DependsCase], None]]=None
     setup_sql: Optional[Union[str, List[str], None]] = None
     request_set_cache: Optional[Union[List[RequestSetCache], None]] = None
-    assert_data: Dict[AssertData]
-    assert_sql: Optional[Union[str, List[str]]] = None
+    assert_data: AssertData
+    assert_sql: Optional[Union[str, List[str], None]] = None
+    tear_down: Optional[Union[List[TearDown], None]] = None
+    tear_down_sql: Optional[List] = None
+    sleep: Optional[Union[int, float]]
 
 
 class TestCaseInfo(BaseModel):

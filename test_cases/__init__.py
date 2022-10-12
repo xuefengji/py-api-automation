@@ -8,7 +8,7 @@
 
 from utils.file.get_all_case_files import get_all_files
 from config import BaseConfig
-from utils.file.yaml_data_analysis import CaseData
+from utils.file.case_analysis import CaseHandle
 from utils.caches.redis_cache import RedisHandle
 from utils import config
 from utils.caches.local_cache import CacheHandle, _cache_data
@@ -21,7 +21,7 @@ def case_set_cache():
     _files_list = get_all_files(BaseConfig.data_dir)
     if _files_list:
         for file in _files_list:
-            _case_data = CaseData(file).get_case()
+            _case_data = CaseHandle(file).case_handle()
             if _case_data:
                 for case in _case_data:
                     for k, v in case.items():

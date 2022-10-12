@@ -1,4 +1,5 @@
 info: &info
+  host: &{{host()}}
   url: /api/sys/operation/audit/record/
   method: get
 
