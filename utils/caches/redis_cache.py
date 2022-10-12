@@ -6,14 +6,14 @@
 # @Desc: 封装 redis
 
 import redis
-from typing import Any
+from typing import Any, Dict
 from utils.data.models.model import RedisConf
 
 
 class RedisHandle:
-    def __init__(self, config: RedisConf):
+    def __init__(self, config: Dict):
         try:
-         self.conn = redis.Redis(config)
+         self.conn = redis.Redis(RedisConf(**config))
         except ConnectionError as e:
             raise ConnectionError('Redis 连接失败') from e
 
@@ -30,8 +30,6 @@ class RedisHandle:
         param value:
         """
         self.conn.hset(name, key, value)
-
-
 
     def hash_get(self, key, name='cases'):
         """
