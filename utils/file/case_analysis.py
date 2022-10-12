@@ -8,6 +8,9 @@
 from typing import Dict
 from utils.file.operation_yaml import OperationYaml
 from utils.data.models.model import TestCase
+from utils.caches.local_cache import CacheHandle
+from utils.caches.redis_cache import RedisHandle
+from utils import config
 
 
 class CaseHandle:
@@ -68,9 +71,24 @@ class CaseHandle:
         return _case_lists
 
 
-
 class GetCaseHandle:
-    pass
+
+    @classmethod
+    def get_cases(cls, cache_type:int, ids: list) -> list:
+        """
+        获取想要执行的用例
+        param cache_type: 缓存类型
+        param ids: 缓存中的用例 id
+        """
+        _case_lists = []
+        for id in ids:
+            if cache_type == 0:
+                case_data = CacheHandle.get_cache(id)
+                _case_lists.append(case_data)
+            else:
+                case_data = RedisHandle(config.redis).hash_get(id)
+                _case_lists.append(case_data)
+        return _case_lists
 
 
 
