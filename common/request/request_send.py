@@ -3,80 +3,85 @@
 # @Time: 2022/8/1
 # @Author: xuef
 # @File: request_send.py
-# @Desc:
+# @Desc: HTTP 请求发送相关操作
 
 import allure
-from common.request.request_definition import BaseRequest
-from common.request.request_type import RequestType
-from utils.data.models.model import TestCase, TestCaseInfo, TestCaseData
+import requests
+from utils.data.enums.enums import RequestTypeEnum
+from utils.data.models.model import TestCase
 from utils.log.log_decorate import LogDecorate
-from utils import config
+from utils.log.log_control import ERROR
 
 
-class RequestHandle(BaseRequest, RequestType):
+class BaseRequest:
+    @classmethod
+    def get(cls):
+        pass
+
+    @classmethod
+    def post(cls):
+        pass
+
+    @classmethod
+    def put(cls):
+        pass
+
+    @classmethod
+    def delete(cls):
+        pass
+
+
+class RequestHandle:
+    """
+    处理http请求发送
+    """
 
     def __new__(cls, *args, **kwargs):
         if not hasattr(cls, "_instance"):
             cls._instance = super().__new__(cls)
         return cls._instance
 
-    def __init__(self, case_info, case_data):
-        self._case_data = TestCase(
-            info=TestCaseInfo(**case_info),
-            case=TestCaseData(**case_data)
-        )
-        self._case_data.info.url = config.host + self._case_data.info.url
+    def __init__(self, case_data: TestCase):
+        self._case_data = case_data
+
+    def type_for_json(self):
+        pass
+
+    def type_for_params(self):
+        pass
+
+    def type_for_file(self):
+        pass
+
+    def type_for_data(self):
+        pass
+
+    def type_for_export(self):
+        pass
 
     @LogDecorate(True)
     def send_request(self):
-        if self._case_data.case.is_run is True or None:
-            if hasattr(RequestHandle, self._case_data.info.method):
-                if self._case_data.case.is_depend:
-                    pass
-                res = RequestHandle.request_type(
-                    method=self._case_data.info.method,
-                    url=self._case_data.info.url,
-                    headers=self._case_data.case.headers,
-                    data=self._case_data.case.data.data,
-                    params=self._case_data.case.data.param,
-                    request_type=self._case_data.case.request_type,
-                )
-                with allure.step('发送{}请求'.format(self._case_data.info.method)):
-                    allure.attach(name="当前请求url：", body=self._case_data.info.url)
+        """
+        发送 http 请求
+        """
+        if self._case_data.is_run is True or None:
+            if hasattr(BaseRequest, self._case_data.method):
+                request_type_mapping = {
+                    RequestTypeEnum.JSON.value: self.type_for_json,
+                    RequestTypeEnum.PARAMS.value: self.type_for_params,
+                    RequestTypeEnum.FILE.value: self.type_for_file,
+                    RequestTypeEnum.DATA.value: self.type_for_data,
+                    RequestTypeEnum.EXPORT.value: self.type_for_export
+                }
+                res = request_type_mapping.get(self._case_data.request_type)()
+                with allure.step('发送{}请求'.format(self._case_data.method)):
+                    allure.attach(name="当前请求url：", body=self._case_data.url)
 
-                    allure.attach(name="当前请求headers：", body=str(self._case_data.case.headers))
-                    allure.attach(name="当前请求数据：", body=str(self._case_data.case.data.data))
+                    allure.attach(name="当前请求headers：", body=str(self._case_data.headers))
+                    allure.attach(name="当前请求数据：", body=str(self._case_data.data.data))
                     allure.attach(name="当前请求结果：", body=str(res.status_code))
                 return res
             raise ValueError("当前请求方式不存在，请检查")
-
-        # url = case_info['url']
-        # method = case_info['method']
-        # headers = case_data['headers']
-        # request_type = case_data['request_type']
-        # data = case_data['data']['body']
-        # params = case_data['data']['params']
-        # if hasattr(RequestHandle, method):
-        #     res = RequestHandle.request_type(
-        #         method=method,
-        #         url=url,
-        #         headers=headers,
-        #         data=data,
-        #         params=params,
-        #         request_type=request_type,
-        #     )
-        #     with allure.step('发送{}请求'.format(method)):
-        #         allure.attach(name="当前请求url：", body=url)
-        #
-        #         allure.attach(name="当前请求headers：", body=str(headers))
-        #         allure.attach(name="当前请求数据：", body=str(data))
-        #         allure.attach(name="当前请求结果：", body=str(res.status_code))
-        #     return res
-        # raise ValueError("当前请求方式不存在！")
-
-
-
-
 
 
 
