@@ -15,6 +15,11 @@ class DataSimulate:
     """
     生成随机数据和获取相应的数据
     """
+    def __new__(cls, *args, **kwargs):
+        if not hasattr(cls, '_instance'):
+            cls._instance = super().__new__(cls)
+        return cls._instance
+
     def __int__(self):
         self.faker = Faker(locale='zh_CN')
 
@@ -29,7 +34,11 @@ class DataSimulate:
         生成模拟手机号
         """
         return self.faker.phone_number()
-
+    def simulate_email(self):
+        """
+        生成模拟邮箱
+        """
+        return self.faker.emai()
 
     @classmethod
     def host(cls) -> str:
@@ -41,14 +50,12 @@ class DataSimulate:
 
 
 
-
-
 def regular(target):
     """
     处理 yaml 文件中类似于 ${{host()}} 的数据
     param target: 需要处理的用例
     """
-    pattern = r'\${(.*?)}'
+    pattern = r'\${{(.*?)}}'
     try:
         while re.findall(pattern, target):
             regular_data = re.search(pattern, target).group(1)
@@ -65,4 +72,6 @@ def regular(target):
     except AttributeError:
         ERROR.error("未找到对应的替换的数据, 请检查数据是否正确 %s", target)
         raise
+
+
 
