@@ -13,12 +13,12 @@ record_01:
     cookie:
   request_type: params
   data:
-    data:
+    body:
+    query:
       start: 0
       limit: 10
       filter: ''
       sort: ''
-    param:
     file:
   encode:
     - $.data.body.filter

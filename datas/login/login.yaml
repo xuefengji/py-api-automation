@@ -13,10 +13,10 @@ login_01:
     Content-Type: application/json
   request_type: json
   data:
-    data:
+    body:
       username: 'admin'
       password: '123456'
-    params:
+    query:
     file:
   encode:
   is_depend: false
