@@ -49,8 +49,8 @@ class RequestHandle:
         _method = self._case_data.method
         _url = self._case_data.url
         _headers = self._case_data.headers
-        if _data.data is None:
-            raise ValueError(f"参数数据不能为空，：{_data.data}")
+        if _data.body is None:
+            raise ValueError(f"参数数据不能为空，：{_data.body}")
         if _data.param is None:
             _data.param = {}
         res = requests.request(
@@ -67,13 +67,13 @@ class RequestHandle:
         _method = self._case_data.method
         _url = self._case_data.url
         _headers = self._case_data.headers
-        if _data.param is None:
-            raise ValueError(f"参数数据不能为空，：{_data.body}")
+        if _data.query is None:
+            raise ValueError(f"参数数据不能为空，：{_data.query}")
         res = requests.request(
             method=_method,
             url=_url,
             headers=_headers,
-            params=_data.param,
+            params=_data.query,
         )
         return res
 
