@@ -45,10 +45,37 @@ class RequestHandle:
         self._case_data = case_data
 
     def type_for_json(self):
-        pass
+        _data= self._case_data.data
+        _method = self._case_data.method
+        _url = self._case_data.url
+        _headers = self._case_data.headers
+        if _data.data is None:
+            raise ValueError(f"参数数据不能为空，：{_data.data}")
+        if _data.param is None:
+            _data.param = {}
+        res = requests.request(
+            method=_method,
+            url=_url,
+            headers = _headers,
+            json=_data.body,
+            params = _data.body,
+        )
+        return res
 
     def type_for_params(self):
-        pass
+        _data = self._case_data.data
+        _method = self._case_data.method
+        _url = self._case_data.url
+        _headers = self._case_data.headers
+        if _data.param is None:
+            raise ValueError(f"参数数据不能为空，：{_data.body}")
+        res = requests.request(
+            method=_method,
+            url=_url,
+            headers=_headers,
+            params=_data.param,
+        )
+        return res
 
     def type_for_file(self):
         pass
@@ -58,6 +85,11 @@ class RequestHandle:
 
     def type_for_export(self):
         pass
+
+    def data_analysis(self):
+        pass
+
+
 
     @LogDecorate(True)
     def send_request(self):
