@@ -53,7 +53,7 @@ class Config(BaseModel):
 
 class RequestData(BaseModel):
     body: Optional[Union[Dict, None]] = None
-    param: Optional[Union[Dict, None]] = None
+    query: Optional[Union[Dict, None]] = None
     file: Optional[Union[Dict, None]] = None
 
 
