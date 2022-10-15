@@ -4,9 +4,13 @@
 # @Author: xuef
 # @File: request_send.py
 # @Desc: HTTP 请求发送相关操作
+import os
+import random
 
 import allure
 import requests
+from requests_toolbelt import MultipartEncoder
+
 from utils.data.enums.enums import RequestTypeEnum
 from utils.data.models.model import TestCase
 from utils.log.log_decorate import LogDecorate
@@ -53,14 +57,18 @@ class RequestHandle:
             raise ValueError(f"参数数据不能为空，：{_data.body}")
         if _data.param is None:
             _data.param = {}
-        res = requests.request(
-            method=_method,
-            url=_url,
-            headers = _headers,
-            json=_data.body,
-            params = _data.body,
-        )
-        return res
+        try:
+            res = requests.request(
+                method=_method,
+                url=_url,
+                headers = _headers,
+                json=_data.body,
+                params = _data.body,
+            )
+            return res
+        except Exception as e:
+            ERROR.error("发送 {} 请求失败:{}".format(self._case_data.method, e))
+            raise ValueError("发送 {} 请求失败！".format(self._case_data.method))
 
     def type_for_params(self):
         _data = self._case_data.data
@@ -69,27 +77,63 @@ class RequestHandle:
         _headers = self._case_data.headers
         if _data.query is None:
             raise ValueError(f"参数数据不能为空，：{_data.query}")
-        res = requests.request(
-            method=_method,
-            url=_url,
-            headers=_headers,
-            params=_data.query,
-        )
-        return res
+        try:
+            res = requests.request(
+                method=_method,
+                url=_url,
+                headers=_headers,
+                params=_data.query,
+            )
+            return res
+        except Exception as e:
+            ERROR.error("发送 {} 请求失败:{}".format(self._case_data.method, e))
+            raise ValueError("发送 {} 请求失败！".format(self._case_data.method))
 
     def type_for_file(self):
-        pass
+        files = self._case_data.data.file
+        if files is None:
+            raise ValueError(f"参数数据不能为空，：{self._case_data.data.file}")
+        for k, v in files.items():
+            if os.path.isfile(v):
+                files[k] = (os.path.basename(v), open(v, 'rb'))
+        enc = MultipartEncoder(
+            fields=files,
+            boundary='--------------' + str(random.randint(1e28, 1e29 - 1))
+        )
+        self._case_data.headers['Content-Type'] = enc.content_type
+        try:
+            res = requests.request(method=self._case_data.method,
+                                   url=self._case_data.url,
+                                   data=enc,
+                                   params=self._case_data.data.query,
+                                   headers=self._case_data.headers,
+                                   verify=False)
+            return res
+        except Exception as e:
+            ERROR.error("发送 {} 请求失败:{}".format(self._case_data.method, e))
+            raise ValueError("发送 {} 请求失败！".format(self._case_data.method))
 
     def type_for_data(self):
-        pass
+        _data= self._case_data.data
+        if _data.body is None:
+            raise ValueError(f"参数数据不能为空，：{_data.body}")
+        if _data.param is None:
+            _data.param = {}
+        try:
+            res = requests.request(
+                method=self._case_data.method,
+                url=self._case_data.url,
+                headers = self._case_data.headers,
+                data=_data.body,
+                params = _data.query,
+            )
+            return res
+        except Exception as e:
+            ERROR.error("发送 {} 请求失败:{}".format(self._case_data.method, e))
+            raise ValueError("发送 {} 请求失败！".format(self._case_data.method))
 
     def type_for_export(self):
         pass
-
-    def data_analysis(self):
-        pass
-
-
 
     @LogDecorate(True)
     def send_request(self):
