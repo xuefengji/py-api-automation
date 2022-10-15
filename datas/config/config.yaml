@@ -1,5 +1,5 @@
 info: &info
-  host: &{{host()}}
+  host: ${{host()}}
   url: /api/sys/operation/audit/record/
   method: get
 
@@ -13,12 +13,12 @@ record_01:
     cookie:
   request_type: params
   data:
-    data:
+    body:
+    query:
       start: 0
       limit: 10
       filter: ''
       sort: ''
-    param:
     file:
   encode:
     - $.data.body.filter
