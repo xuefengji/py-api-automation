@@ -9,8 +9,9 @@ import random
 
 import allure
 import requests
+from jsonpath import jsonpath
+from urllib.parse import quote
 from requests_toolbelt import MultipartEncoder
-
 from utils.data.enums.enums import RequestTypeEnum
 from utils.data.models.model import TestCase
 from utils.log.log_decorate import LogDecorate
@@ -134,6 +135,12 @@ class RequestHandle:
 
     def type_for_export(self):
         pass
+
+    def data_encode(self):
+        if self._case_data.encode:
+            for i in self._case_data.encode:
+                encode_data = quote(jsonpath(i, self._case_data)[0])
+                pass
 
     @LogDecorate(True)
     def send_request(self):
