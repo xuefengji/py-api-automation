@@ -133,8 +133,21 @@ class RequestHandle:
             ERROR.error("发送 {} 请求失败:{}".format(self._case_data.method, e))
             raise ValueError("发送 {} 请求失败！".format(self._case_data.method))
 
-    def type_for_export(self):
-        pass
+    def type_for_export(self, file=False):
+        #TODO 导出接口
+        param = self._case_data.data.query
+        body = self._case_data.data.body
+        try:
+            res = requests.request(
+                method=self._case_data.method,
+                url=self._case_data.url,
+                headers = self._case_data.headers,
+                data=body,
+                params = param
+            )
+        except Exception as e:
+            ERROR.error("发送 {} 请求失败:{}".format(self._case_data.method, e))
+            raise ValueError("发送 {} 请求失败！".format(self._case_data.method))
 
     def data_encode(self):
         if self._case_data.encode:
