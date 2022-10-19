@@ -46,3 +46,4 @@ class RequestTypeEnum(Enum):
     FILE = "file"
     DATA = "data"
     EXPORT = "export"
+    NONE = "none"
