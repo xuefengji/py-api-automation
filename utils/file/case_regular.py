@@ -9,6 +9,9 @@ import random
 import re
 from faker import Faker
 from utils.log.log_control import ERROR
+from utils.caches.local_cache import CacheHandle
+from utils.caches.redis_cache import RedisHandle
+from utils import config
 
 
 class DataSimulate:
@@ -74,4 +77,23 @@ def regular(target):
         raise
 
 
-
+def regular_cache(target, cache_type=0):
+    """
+    对用例中含有$cache的数据进行处理
+    param target: 需要处理的数据
+    param cache_type: 缓存方式
+    """
+    pattern = r'\$cache{{(.*?)}}'
+    try:
+        while re.findall(pattern, target):
+            regular_data = re.search(pattern, target).group(1)
+            if cache_type ==0:
+                cache_value = CacheHandle.get_cache(regular_data)
+                target = re.sub(pattern, cache_value, target, 1)
+            else:
+                cache_value = RedisHandle(config.redis).hash_get(regular_data)
+                target = re.sub(pattern, str(cache_value), target, 1)
+            return target
+    except AttributeError:
+        ERROR.error("未找到对应的替换的数据, 请检查数据是否正确 %s", target)
+        raise
