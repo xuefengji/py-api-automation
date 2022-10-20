@@ -68,10 +68,10 @@ def regular(target):
                 params = value_data.split(',')
                 value = getattr(DataSimulate(), func_name)(*params)
                 target = re.sub(pattern, str(value), target, 1)
-                return target
-            value = getattr(DataSimulate(), func_name)()
-            target = re.sub(pattern, str(value), target, 1)
-            return target
+            else:
+                value = getattr(DataSimulate(), func_name)()
+                target = re.sub(pattern, str(value), target, 1)
+        return target
     except AttributeError:
         ERROR.error("未找到对应的替换的数据, 请检查数据是否正确 %s", target)
         raise
@@ -97,3 +97,4 @@ def regular_cache(target, cache_type=0):
     except AttributeError:
         ERROR.error("未找到对应的替换的数据, 请检查数据是否正确 %s", target)
         raise
+
