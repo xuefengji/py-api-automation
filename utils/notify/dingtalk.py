@@ -12,22 +12,22 @@ import base64
 import urllib.parse
 from typing import Text
 from dingtalkchatbot.chatbot import DingtalkChatbot
-from utils.config_utils.config_control import ConfigGet
+from utils import config
 
 
 class DingTalk:
     def __init__(self):
         self.timestamp = str(round(time.time() * 1000))
-        self.config = ConfigGet().get_ding_talk()
+        self.config = config
 
     def xiao_ding(self):
         sign = self.get_sign()
         # 从yaml文件中获取钉钉配置信息
-        webhook = self.config['webhook']  + "&timestamp=" + self.timestamp + "&sign=" + sign
+        webhook = self.config.ding_talk.webhook + "&timestamp=" + self.timestamp + "&sign=" + sign
         return DingtalkChatbot(webhook)
 
     def get_sign(self):
-        secret = self.config['secret']
+        secret = self.config.ding_talk.secret
         string_to_sign = '{}\n{}'.format(self.timestamp, secret).encode('utf-8')
         hmac_code = hmac.new(secret.encode('utf-8'), string_to_sign, digestmod=hashlib.sha256).digest()
         sign = urllib.parse.quote_plus(base64.b64encode(hmac_code))
