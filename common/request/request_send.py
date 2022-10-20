@@ -46,8 +46,9 @@ class RequestHandle:
             cls._instance = super().__new__(cls)
         return cls._instance
 
-    def __init__(self, case_data: TestCase):
-        self._case_data = case_data
+    def __init__(self, case_data):
+        self._case_data = TestCase(**case_data)
+        print(self._case_data)
 
     def type_for_json(self):
         _data= self._case_data.data
@@ -169,6 +170,7 @@ class RequestHandle:
                     RequestTypeEnum.DATA.value: self.type_for_data,
                     RequestTypeEnum.EXPORT.value: self.type_for_export
                 }
+
                 res = request_type_mapping.get(self._case_data.request_type)()
                 with allure.step('发送{}请求'.format(self._case_data.method)):
                     allure.attach(name="当前请求url：", body=self._case_data.url)
