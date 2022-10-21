@@ -10,6 +10,7 @@ from utils.file.operation_yaml import OperationYaml
 from utils.caches.local_cache import CacheHandle
 from utils.caches.redis_cache import RedisHandle
 from utils import config
+from utils.data.models.model import TestCase
 
 
 class CaseHandle:
@@ -45,10 +46,32 @@ class CaseHandle:
         _case_lists = []
         for key, value in _case_datas.items():
             if key != 'info':
-                value['url'] = self.get_url(key, value)
-                del value['host']
-                _case_lists.append({key: value})
+                case_data = {
+                    'url': self.get_url(key, value),
+                    'method': self.get_method(key, value),
+                    'is_run': self.get_is_run(value),
+                    'title': self.get_title(key, value),
+                    'headers': self.get_headers(value),
+                    'request_type': self.get_request_type(key, value),
+                    'data': self.get_data(key, value),
+                    'encode': self.get_encode(value),
+                    'is_depend': self.get_is_depend(value),
+                    'depends_case': self.get_depends_case(value),
+                    'setup_sql': self.setup_sql(value),
+                    'request_set_cache': self.get_request_set_cache(value),
+                    'assert_data': self.get_assert_data(value),
+                    'assert_sql': self.get_assert_sql(value),
+                    'tear_down': self.get_tear_down(value),
+                    'tear_down_sql': self.get_tear_down_sql(value),
+                    'sleep': self.get_sleep(value)
+
+                }
+                _case_lists.append({key: TestCase(**case_data)})
         return _case_lists
+
+    #TODO 获取
+    def get_method(self, key, value):
+        pass
 
 
 class GetCaseHandle:
