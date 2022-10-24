@@ -5,7 +5,7 @@
 # @File: case_analysis.py
 # @Desc:
 
-from typing import Dict
+from typing import Dict, Union
 from utils.file.operation_yaml import OperationYaml
 from utils.caches.local_cache import CacheHandle
 from utils.caches.redis_cache import RedisHandle
@@ -56,17 +56,17 @@ class CaseHandle:
                     'data': self.get_data(key, value),
                     'encode': self.get_encode(value),
                     'is_depend': self.get_is_depend(value),
-                    'depends_case': self.get_depends_case(value),
-                    'setup_sql': self.setup_sql(value),
+                    'depends_case': self.get_depends_case(key, value),
+                    'setup_sql': self.get_setup_sql(value),
                     'request_set_cache': self.get_request_set_cache(value),
-                    'assert_data': self.get_assert_data(value),
+                    'assert_data': self.get_assert_data(key, value),
                     'assert_sql': self.get_assert_sql(value),
                     'tear_down': self.get_tear_down(value),
                     'tear_down_sql': self.get_tear_down_sql(value),
                     'sleep': self.get_sleep(value)
 
                 }
-                _case_lists.append({key: TestCase(**case_data)})
+                _case_lists.append({key: TestCase(**case_data).dict()})
         return _case_lists
 
     def get_method(self, case_id: str, data: Dict):
@@ -124,8 +124,8 @@ class CaseHandle:
 
     def get_data(self, case_id:str, data:Dict):
         _data = data['data']
-        _request_type = [e.value for e in RequestTypeEnum]
-        if _data not in _request_type:
+        _request_types = [e.value for e in RequestTypeEnum]
+        if self.get_request_type(case_id, data) not in _request_types:
             raise ValueError(
                 f"用例中的参数类型不支持！\n "
                 f"用例ID: {case_id} \n "
@@ -152,30 +152,71 @@ class CaseHandle:
            return False
         return _is_depend
 
-    def get_depends_case(self, data:Dict):
-        _depends_case = data['depends_case']
+    #TODO
+    def get_depends_case(self,case_id: str , data:Dict)-> Union[Dict, None]:
+        """
+        判断是否有依赖数据，有则返回，无则返回 None
+        """
+        if self.get_is_depend(data):
+            _depends_case = data['depends_case']
+            if _depends_case is None:
+                raise ValueError(
+                    f"用例中的依赖数据不能为空！\n "
+                    f"用例ID: {case_id} \n "
+                    f"用例路径: {self.file_path}"
+                )
+            return _depends_case
+        return None
 
 
-    def setup_sql(self):
-        pass
+    def get_setup_sql(self, data:Dict):
+        try:
+            _setup_sql = data['setup_sql']
+            return _setup_sql
+        except Exception as e:
+            return None
 
-    def get_request_set_cache(self):
-        pass
+    def get_request_set_cache(self, data:Dict):
+        try:
+            _request_set_cache = data['request_set_cache']
+            return _request_set_cache
+        except Exception as e:
+            return None
 
-    def get_assert_data(self):
-        pass
+    def get_assert_data(self, case_id:str, data:Dict):
+        _assert_data = data['assert_data']
+        if _assert_data is None:
+            raise ValueError(
+                f"用例中的断言不能为空！\n "
+                f"用例ID: {case_id} \n "
+                f"用例路径: {self.file_path}"
+            )
+        return _assert_data
 
-    def get_assert_sql(self):
-        pass
+    def get_assert_sql(self, data:Dict):
+        _assert_sql = data['assert_sql']
+        return _assert_sql
 
-    def get_tear_down(self):
-        pass
+    def get_tear_down(self, data:Dict):
+        try:
+            _tear_down =data['tear_down']
+            return _tear_down
+        except Exception as e:
+            return None
 
-    def get_tear_down_sql(self):
-        pass
+    def get_tear_down_sql(self, data:Dict):
+        try:
+            _tear_down_sql = data['tear_down_sql']
+            return _tear_down_sql
+        except Exception as e:
+            return None
 
-    def get_sleep(self):
-        pass
+    def get_sleep(self, data:Dict):
+        try:
+            _sleep = data['sleep']
+            return _sleep
+        except Exception as e:
+            return None
 
 
 class GetCaseHandle:
