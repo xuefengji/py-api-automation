@@ -10,6 +10,7 @@ from utils.file.operation_yaml import OperationYaml
 from utils.caches.local_cache import CacheHandle
 from utils.caches.redis_cache import RedisHandle
 from utils import config
+from common.request.request_send import BaseRequest
 from utils.data.models.model import TestCase
 
 
@@ -25,7 +26,7 @@ class CaseHandle:
 
     def get_url(self, case_id:str, data: Dict) -> str:
         """
-        拼接 host+url
+        获取url和host并进行拼接
         """
         _url = data['url']
         _host = data['host']
@@ -36,7 +37,6 @@ class CaseHandle:
                 f"用例路径: {self.file_path}"
             )
         return _host + _url
-
 
     def case_handle(self):
         """
@@ -69,8 +69,70 @@ class CaseHandle:
                 _case_lists.append({key: TestCase(**case_data)})
         return _case_lists
 
-    #TODO 获取
-    def get_method(self, key, value):
+    def get_method(self, case_id: str, data: Dict) -> str:
+        """获取请求方式"""
+        _method = data['method']
+        if _method is None:
+            raise ValueError(
+                f"用例中的请求方式不能为空！\n "
+                f"用例ID: {case_id} \n "
+                f"用例路径: {self.file_path}"
+            )
+        if not hasattr(BaseRequest, _method):
+            raise ValueError(
+                f"用例中的请求方式不存在，请检查！\n "
+                f"用例ID: {case_id} \n "
+                f"用例路径: {self.file_path}"
+            )
+        return _method
+
+    def get_is_run(self, data: Dict)->bool:
+        """
+        获取用例是否运行
+        """
+        _is_run = data['is_run']
+        return _is_run
+
+    def get_title(self):
+        pass
+
+    def get_headers(self):
+        pass
+
+    def get_request_type(self):
+        pass
+
+    def get_data(self):
+        pass
+
+    def get_encode(self):
+        pass
+
+    def get_is_depend(self):
+        pass
+
+    def get_depends_case(self):
+        pass
+
+    def setup_sql(self):
+        pass
+
+    def get_request_set_cache(self):
+        pass
+
+    def get_assert_data(self):
+        pass
+
+    def get_assert_sql(self):
+        pass
+
+    def get_tear_down(self):
+        pass
+
+    def get_tear_down_sql(self):
+        pass
+
+    def get_sleep(self):
         pass
 
 
