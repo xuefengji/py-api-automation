@@ -10,7 +10,7 @@ from utils.file.operation_yaml import OperationYaml
 from utils.caches.local_cache import CacheHandle
 from utils.caches.redis_cache import RedisHandle
 from utils import config
-from common.request.request_send import BaseRequest
+from utils.data.enums.enums import RequestMethod, RequestTypeEnum
 from utils.data.models.model import TestCase
 
 
@@ -24,7 +24,7 @@ class CaseHandle:
             cls._instance = super().__new__(cls)
         return cls._instance
 
-    def get_url(self, case_id:str, data: Dict) -> str:
+    def get_url(self, case_id:str, data: Dict):
         """
         获取url和host并进行拼接
         """
@@ -69,7 +69,7 @@ class CaseHandle:
                 _case_lists.append({key: TestCase(**case_data)})
         return _case_lists
 
-    def get_method(self, case_id: str, data: Dict) -> str:
+    def get_method(self, case_id: str, data: Dict):
         """获取请求方式"""
         _method = data['method']
         if _method is None:
@@ -78,7 +78,7 @@ class CaseHandle:
                 f"用例ID: {case_id} \n "
                 f"用例路径: {self.file_path}"
             )
-        if not hasattr(BaseRequest, _method):
+        if _method not in [e.value for e in RequestMethod]:
             raise ValueError(
                 f"用例中的请求方式不存在，请检查！\n "
                 f"用例ID: {case_id} \n "
@@ -86,33 +86,75 @@ class CaseHandle:
             )
         return _method
 
+
     def get_is_run(self, data: Dict)->bool:
         """
         获取用例是否运行
         """
-        _is_run = data['is_run']
-        return _is_run
+        try:
+            _is_run = data['is_run']
+            return _is_run
+        except Exception as e:
+            return False
 
-    def get_title(self):
-        pass
+    def get_title(self, case_id: str,data:Dict):
+        try:
+            _title = data['title']
+            return _title
+        except Exception as e:
+            raise ValueError(
+                f"用例中的描述不能为空！\n "
+                f"用例ID: {case_id} \n "
+                f"用例路径: {self.file_path}"
+            )
+    #TODO
+    def get_headers(self, data:Dict)->Dict:
+        _headers = data['headers']
+        return _headers
 
-    def get_headers(self):
-        pass
+    def get_request_type(self, case_id: str, data:Dict):
+        _request_type = data['request_type']
+        if _request_type is None:
+            raise ValueError(
+                f"用例中的参数请求类型不能为空！\n "
+                f"用例ID: {case_id} \n "
+                f"用例路径: {self.file_path}"
+            )
+        return _request_type
 
-    def get_request_type(self):
-        pass
+    def get_data(self, case_id:str, data:Dict):
+        _data = data['data']
+        _request_type = [e.value for e in RequestTypeEnum]
+        if _data not in _request_type:
+            raise ValueError(
+                f"用例中的参数类型不支持！\n "
+                f"用例ID: {case_id} \n "
+                f"用例路径: {self.file_path}"
+            )
+        if _data is not None:
+            if not any(_data.values()):
+                raise ValueError(
+                    f"用例中的请求参数不能为空！\n "
+                    f"用例ID: {case_id} \n "
+                    f"用例路径: {self.file_path}"
+                )
+        return _data
 
-    def get_data(self):
-        pass
+    def get_encode(self, data:Dict):
+        _encode = data['encode']
+        if _encode is None:
+            return None
+        return _encode
 
-    def get_encode(self):
-        pass
+    def get_is_depend(self, data:Dict):
+        _is_depend = data['is_depend']
+        if _is_depend is None:
+           return False
+        return _is_depend
 
-    def get_is_depend(self):
-        pass
+    def get_depends_case(self, data:Dict):
+        _depends_case = data['depends_case']
 
-    def get_depends_case(self):
-        pass
 
     def setup_sql(self):
         pass
