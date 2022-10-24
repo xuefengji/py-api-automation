@@ -38,15 +38,15 @@ class RequestHandle:
         _headers = self._case_data.headers
         if _data.body is None:
             raise ValueError(f"参数数据不能为空，：{_data.body}")
-        if _data.param is None:
-            _data.param = {}
+        # if _data.query is None:
+        #     _data.query = {}
         try:
             res = requests.request(
                 method=_method,
                 url=_url,
                 headers = _headers,
                 json=_data.body,
-                params = _data.body,
+                params = _data.query,
             )
             return res
         except Exception as e:
@@ -130,7 +130,7 @@ class RequestHandle:
         except Exception as e:
             ERROR.error("发送 {} 请求失败:{}".format(self._case_data.method, e))
             raise ValueError("发送 {} 请求失败！".format(self._case_data.method))
-
+    # TODO
     def data_encode(self):
         if self._case_data.encode:
             for i in self._case_data.encode:
@@ -143,24 +143,22 @@ class RequestHandle:
         发送 http 请求
         """
         if self._case_data.is_run is True or None:
-            if hasattr(BaseRequest, self._case_data.method):
-                request_type_mapping = {
-                    RequestTypeEnum.JSON.value: self.type_for_json,
-                    RequestTypeEnum.PARAMS.value: self.type_for_params,
-                    RequestTypeEnum.FILE.value: self.type_for_file,
-                    RequestTypeEnum.DATA.value: self.type_for_data,
-                    RequestTypeEnum.EXPORT.value: self.type_for_export
-                }
+            request_type_mapping = {
+                RequestTypeEnum.JSON.value: self.type_for_json,
+                RequestTypeEnum.PARAMS.value: self.type_for_params,
+                RequestTypeEnum.FILE.value: self.type_for_file,
+                RequestTypeEnum.DATA.value: self.type_for_data,
+                RequestTypeEnum.EXPORT.value: self.type_for_export
+            }
 
-                res = request_type_mapping.get(self._case_data.request_type)()
-                with allure.step('发送{}请求'.format(self._case_data.method)):
-                    allure.attach(name="当前请求url：", body=self._case_data.url)
+            res = request_type_mapping.get(self._case_data.request_type)()
+            with allure.step('发送{}请求'.format(self._case_data.method)):
+                allure.attach(name="当前请求url：", body=self._case_data.url)
 
-                    allure.attach(name="当前请求headers：", body=str(self._case_data.headers))
-                    allure.attach(name="当前请求数据：", body=str(self._case_data.data.data))
-                    allure.attach(name="当前请求结果：", body=str(res.status_code))
-                return res
-            raise ValueError("当前请求方式不存在，请检查")
+                allure.attach(name="当前请求headers：", body=str(self._case_data.headers))
+                allure.attach(name="当前请求数据：", body=str(self._case_data.data.body))
+                allure.attach(name="当前请求结果：", body=str(res.status_code))
+            return res
 
 
 
