@@ -47,3 +47,10 @@ class RequestTypeEnum(Enum):
     DATA = "data"
     EXPORT = "export"
     NONE = "none"
+
+@unique
+class RequestMethod(Enum):
+    POST = 'post'
+    GET = 'get'
+    PUT = 'put'
+    DELETE = 'delete'

@@ -17,25 +17,6 @@ from utils.data.models.model import TestCase
 from utils.log.log_decorate import LogDecorate
 from utils.log.log_control import ERROR
 
-
-class BaseRequest:
-    @classmethod
-    def get(cls):
-        pass
-
-    @classmethod
-    def post(cls):
-        pass
-
-    @classmethod
-    def put(cls):
-        pass
-
-    @classmethod
-    def delete(cls):
-        pass
-
-
 class RequestHandle:
     """
     处理http请求发送
