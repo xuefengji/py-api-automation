@@ -141,10 +141,11 @@ class CaseHandle:
         return _data
 
     def get_encode(self, data:Dict):
-        _encode = data['encode']
-        if _encode is None:
+        try:
+            _encode = data['encode']
+            return _encode
+        except Exception as e:
             return None
-        return _encode
 
     def get_is_depend(self, data:Dict):
         _is_depend = data['is_depend']
@@ -152,7 +153,6 @@ class CaseHandle:
            return False
         return _is_depend
 
-    #TODO
     def get_depends_case(self,case_id: str , data:Dict)-> Union[Dict, None]:
         """
         判断是否有依赖数据，有则返回，无则返回 None
@@ -166,7 +166,8 @@ class CaseHandle:
                     f"用例路径: {self.file_path}"
                 )
             return _depends_case
-        return None
+        else:
+            return None
 
 
     def get_setup_sql(self, data:Dict):
