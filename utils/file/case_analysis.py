@@ -107,10 +107,13 @@ class CaseHandle:
                 f"用例ID: {case_id} \n "
                 f"用例路径: {self.file_path}"
             )
-    #TODO
-    def get_headers(self, data:Dict)->Dict:
-        _headers = data['headers']
-        return _headers
+
+    def get_headers(self, data:Dict):
+        try:
+            _headers = data['headers']
+            return _headers
+        except Exception as e:
+            return None
 
     def get_request_type(self, case_id: str, data:Dict):
         _request_type = data['request_type']
