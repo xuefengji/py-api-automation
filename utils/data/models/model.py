@@ -43,6 +43,7 @@ class Config(BaseModel):
     tester: str
     env: str
     host: str
+    log: bool = True
     notification_type: int = 0
     cache_type: int = 0
     mysql: MySqlConf
@@ -101,18 +102,17 @@ class TearDown(BaseModel):
     send_request: Optional[List[SendRequest]]
 
 
-
 class TestCase(BaseModel):
     url: str
     method: str
     is_run: Union[bool, None] = False
     title: str
-    headers: Dict = {}
+    headers: Union[Dict, None] = None
     request_type: str
     data: RequestData
     encode: Optional[Union[List, None]] = None
     is_depend: Union[bool, None] = False
-    depends_case: Optional[Union[List[DependsCase], None]]=None
+    depends_case: Optional[Union[List[DependsCase], None]] = None
     setup_sql: Optional[Union[str, List[str], None]] = None
     request_set_cache: Optional[Union[List[RequestSetCache], None]] = None
     assert_data: AssertData
