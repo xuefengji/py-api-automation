@@ -10,7 +10,10 @@ import json
 from jsonpath import jsonpath
 from common.asserts.assert_base import Assert
 from utils.database.mysql_control import MySQL
-from utils.config_utils.config_control import ConfigGet
+from utils.caches.local_cache import CacheHandle
+from utils.caches.redis_cache import RedisHandle
+from utils import config
+
 
 class TearDown:
 
@@ -134,3 +137,44 @@ class TearDown:
         except Exception as e:
             raise ValueError("获取依赖headers相关值失败！")
 
+
+class RequestSetCache:
+
+    def __init__(self, request_set_cache, request_data, response_data):
+        self.request_set_cache = request_set_cache
+        self.response_data = response_data.json()
+        self.request_data = {'data':request_data}
+
+    def __new__(cls, *args, **kwargs):
+        if not hasattr(cls, "_instance"):
+            cls._instance = super().__new__(cls)
+        return cls._instance
+
+    def set_response_cache(self, key, json_path, cache_type=config.cache_type):
+        _data = jsonpath(self.response_data, json_path)
+        if _data:
+            if cache_type == 0:
+                CacheHandle.update_cache(key, _data[0])
+            elif cache_type == 1:
+                #todo
+                RedisHandle.hash_set(key, _data[0])
+
+    def set_request_cache(self, key, json_path, cache_type=config.cache_type):
+        _data = jsonpath(self.request_data, json_path)
+        if _data:
+            if cache_type == 0:
+                CacheHandle.update_cache(key, _data[0])
+            elif cache_type == 1:
+                # todo
+                RedisHandle.hash_set(key, _data[0])
+
+    def set_cache(self):
+        if self.request_set_cache:
+            for i in self.request_set_cache:
+                _name = i.name
+                _json_path = i.json_path
+                _type = i.type
+                if _type == 'request':
+                    self.set_request_cache(_name, _json_path)
+                elif _type == 'response':
+                    self.set_response_cache( _name, _json_path)
