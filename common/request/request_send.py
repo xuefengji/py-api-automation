@@ -16,6 +16,7 @@ from utils.data.enums.enums import RequestTypeEnum
 from utils.data.models.model import TestCase
 from utils.log.log_decorate import LogDecorate
 from utils.log.log_control import ERROR
+from utils import config
 
 class RequestHandle:
     """
@@ -137,7 +138,7 @@ class RequestHandle:
                 encode_data = quote(jsonpath(i, self._case_data)[0])
                 pass
 
-    @LogDecorate(True)
+    @LogDecorate(config.log)
     def send_request(self):
         """
         发送 http 请求
