@@ -14,6 +14,9 @@ notification_type: 0
 # 测试用例缓存地址: 0表示本地缓存、1表示redis缓存
 cache_type: 0
 
+# 是否开启日志,true表示开启，false表示不开启
+log: false
+
 # mysql 连接信息
 mysql:
   host: '127.0.0.1' # MySQL服务端的IP地址
