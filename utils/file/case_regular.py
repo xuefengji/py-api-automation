@@ -83,7 +83,7 @@ def regular_cache(target, cache_type=0):
     param target: 需要处理的数据
     param cache_type: 缓存方式
     """
-    pattern = r'\$cache{{(.*?)}}'
+    pattern = r'\$cache{(.*?)}'
     try:
         while re.findall(pattern, target):
             regular_data = re.search(pattern, target).group(1)
