@@ -17,6 +17,9 @@ from utils.data.models.model import TestCase
 from utils.log.log_decorate import LogDecorate
 from utils.log.log_control import ERROR
 from utils import config
+from common.request.request_teardown import RequestSetCache
+from utils.file.case_regular import regular_cache
+
 
 class RequestHandle:
     """
@@ -29,8 +32,8 @@ class RequestHandle:
         return cls._instance
 
     def __init__(self, case_data):
+        # self.data_encode(case_data)
         self._case_data = TestCase(**case_data)
-        print(self._case_data)
 
     def type_for_json(self):
         _data= self._case_data.data
@@ -131,12 +134,24 @@ class RequestHandle:
         except Exception as e:
             ERROR.error("发送 {} 请求失败:{}".format(self._case_data.method, e))
             raise ValueError("发送 {} 请求失败！".format(self._case_data.method))
+
     # TODO
-    def data_encode(self):
-        if self._case_data.encode:
-            for i in self._case_data.encode:
-                encode_data = quote(jsonpath(i, self._case_data)[0])
-                pass
+    def data_encode(self, case_data):
+        """对需要编码的参数进行编码处理"""
+        if case_data['encode']:
+            for i in case_data['encode']:
+                encode_data = quote(jsonpath(case_data, i)[0])
+                data_path = ''
+                for v in i.split('.'):
+                    if v == '$':
+                        continue
+                    data_path+='['+"'"+v+"'"+']'
+
+
+
+    @staticmethod
+    def cache_check():
+        pass
 
     @LogDecorate(config.log)
     def send_request(self):
@@ -151,7 +166,6 @@ class RequestHandle:
                 RequestTypeEnum.DATA.value: self.type_for_data,
                 RequestTypeEnum.EXPORT.value: self.type_for_export
             }
-
             res = request_type_mapping.get(self._case_data.request_type)()
             with allure.step('发送{}请求'.format(self._case_data.method)):
                 allure.attach(name="当前请求url：", body=self._case_data.url)
@@ -159,6 +173,9 @@ class RequestHandle:
                 allure.attach(name="当前请求headers：", body=str(self._case_data.headers))
                 allure.attach(name="当前请求数据：", body=str(self._case_data.data.body))
                 allure.attach(name="当前请求结果：", body=str(res.status_code))
+
+            RequestSetCache(self._case_data.request_set_cache, self._case_data.data, res).set_cache()
+
             return res
 
 
