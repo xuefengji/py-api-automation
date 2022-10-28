@@ -110,7 +110,6 @@ class TestCase(BaseModel):
     headers: Union[Dict, None] = None
     request_type: str
     data: RequestData
-    encode: Optional[Union[List, None]] = None
     is_depend: Union[bool, None] = False
     depends_case: Optional[Union[List[DependsCase], None]] = None
     setup_sql: Optional[Union[str, List[str], None]] = None
