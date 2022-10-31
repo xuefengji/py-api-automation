@@ -6,7 +6,7 @@
 # @Desc: HTTP 请求发送相关操作
 import os
 import random
-
+import ast
 import allure
 import requests
 from jsonpath import jsonpath
@@ -19,6 +19,7 @@ from utils.log.log_control import ERROR
 from utils import config
 from common.request.request_teardown import RequestSetCache
 from utils.file.case_regular import regular_cache
+from config import BaseConfig
 
 
 class RequestHandle:
@@ -81,8 +82,9 @@ class RequestHandle:
         if files is None:
             raise ValueError(f"参数数据不能为空，：{self._case_data.data.file}")
         for k, v in files.items():
-            if os.path.isfile(v):
-                files[k] = (os.path.basename(v), open(v, 'rb'))
+            file_path = os.path.join(BaseConfig.file_dir, v)
+            if os.path.isfile(file_path):
+                files[k] = (os.path.basename(v), open(file_path, 'rb'))
         enc = MultipartEncoder(
             fields=files,
             boundary='--------------' + str(random.randint(1e28, 1e29 - 1))
@@ -90,10 +92,10 @@ class RequestHandle:
         self._case_data.headers['Content-Type'] = enc.content_type
         try:
             res = requests.request(method=self._case_data.method,
-                                   url=self._case_data.url,
+                                   url=ast.literal_eval(regular_cache(self._case_data.url)),
                                    data=enc,
                                    params=self._case_data.data.query,
-                                   headers=self._case_data.headers,
+                                   headers=ast.literal_eval(regular_cache(self._case_data.headers)),
                                    verify=False)
             return res
         except Exception as e:
@@ -134,18 +136,6 @@ class RequestHandle:
         except Exception as e:
             ERROR.error("发送 {} 请求失败:{}".format(self._case_data.method, e))
             raise ValueError("发送 {} 请求失败！".format(self._case_data.method))
-
-    # TODO
-    def data_encode(self, case_data):
-        """对需要编码的参数进行编码处理"""
-        if case_data['encode']:
-            for i in case_data['encode']:
-                encode_data = quote(jsonpath(case_data, i)[0])
-                data_path = ''
-                for v in i.split('.'):
-                    if v == '$':
-                        continue
-                    data_path+='['+"'"+v+"'"+']'
 
 
 
