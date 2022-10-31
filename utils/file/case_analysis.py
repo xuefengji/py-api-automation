@@ -54,7 +54,6 @@ class CaseHandle:
                     'headers': self.get_headers(value),
                     'request_type': self.get_request_type(key, value),
                     'data': self.get_data(key, value),
-                    'encode': self.get_encode(value),
                     'is_depend': self.get_is_depend(value),
                     'depends_case': self.get_depends_case(key, value),
                     'setup_sql': self.get_setup_sql(value),
@@ -142,13 +141,6 @@ class CaseHandle:
                     f"用例路径: {self.file_path}"
                 )
         return _data
-
-    def get_encode(self, data:Dict):
-        try:
-            _encode = data['encode']
-            return _encode
-        except Exception as e:
-            return None
 
     def get_is_depend(self, data:Dict):
         _is_depend = data['is_depend']
