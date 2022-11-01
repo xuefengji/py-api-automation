@@ -27,12 +27,13 @@ def case_set_cache():
         _case_data = CaseHandle(file).case_handle()
         for case in _case_data:
             for k, v in case.items():
-                if config.cache_type ==1:
+                if config.cache_type == 1:
                     RedisHandle(config.redis).hash_set(k, v)
-                if k in _cache_data.keys():
-                    raise ValueError(f"case_id: {k} 存在重复项, 请修改case_id\n"
-                                         f"文件路径: {file}")
-                CacheHandle.update_cache(k, v)
+                else:
+                    if k in _cache_data.keys():
+                        raise ValueError(f"case_id: {k} 存在重复项, 请修改case_id\n"
+                                             f"文件路径: {file}")
+                    CacheHandle.update_cache(k, v)
 
 
 case_set_cache()
