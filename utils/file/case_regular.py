@@ -48,7 +48,6 @@ class DataSimulate:
         """
         获取主机信息
         """
-        from utils import config
         return config.host
 
 
@@ -58,6 +57,7 @@ def regular(target):
     处理 yaml 文件中类似于 ${{host()}} 的数据
     param target: 需要处理的用例
     """
+    target = str(target)
     pattern = r'\${{(.*?)}}'
     try:
         while re.findall(pattern, target):
@@ -77,24 +77,24 @@ def regular(target):
         raise
 
 
-def regular_cache(target, cache_type=0):
+def regular_cache(target, cache_type=config.cache_type):
     """
     对用例中含有$cache的数据进行处理
     param target: 需要处理的数据
     param cache_type: 缓存方式
     """
+    target = str(target)
     pattern = r'\$cache{(.*?)}'
     try:
         while re.findall(pattern, target):
             regular_data = re.search(pattern, target).group(1)
-            if cache_type ==0:
+            if cache_type == 0:
                 cache_value = CacheHandle.get_cache(regular_data)
                 target = re.sub(pattern, cache_value, target, 1)
             else:
                 cache_value = RedisHandle(config.redis).hash_get(regular_data)
                 target = re.sub(pattern, str(cache_value), target, 1)
-            return target
+        return target
     except AttributeError:
         ERROR.error("未找到对应的替换的数据, 请检查数据是否正确 %s", target)
         raise
-
