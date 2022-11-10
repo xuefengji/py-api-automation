@@ -32,27 +32,29 @@ class Depend():
 
     def depend_init(self):
         """
-        请求前准备
-        :param info: 请求 url 信息
-        :param data: 用例数据
-        :return:
+        获取依赖数据
+
         """
-        _check_data = self._case.case
-        _check_info = self._case.info
-        # check_data = data
-        # check_info = info
-        # check_info['url'] = config.host + check_info['url']
-        # is_run = data['is_run']
-        is_depend = _check_data.is_depend
-        if is_depend:
-            depends_cases = _check_data.depends_case
-            for depends_case in depends_cases:
-                case_id = depends_case.case_id
-                depends_data = depends_case.depends_data
-                if case_id == 'sql':
-                    self.set_up_sql_depend()
-                else:
-                    pass
+        _is_depends = self._case.is_depend
+        _depends_case = self._case.depends_case
+        if _is_depends in [True, None]:
+            pass
+        # _check_data = self._case.case
+        # _check_info = self._case.info
+        # # check_data = data
+        # # check_info = info
+        # # check_info['url'] = config.host + check_info['url']
+        # # is_run = data['is_run']
+        # is_depend = _check_data.is_depend
+        # if is_depend:
+        #     depends_cases = _check_data.depends_case
+        #     for depends_case in depends_cases:
+        #         case_id = depends_case.case_id
+        #         depends_data = depends_case.depends_data
+        #         if case_id == 'sql':
+        #             self.set_up_sql_depend()
+        #         else:
+        #             pass
 
 
 
