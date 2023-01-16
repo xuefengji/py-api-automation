@@ -1,37 +1,13 @@
-Package               Version
---------------------- ---------
-allure-pytest         2.9.45
-allure-python-commons 2.9.45
-async-timeout         4.0.2
-atomicwrites          1.4.1
-attrs                 21.4.0
-certifi               2022.6.15
-charset-normalizer    2.1.0
-colorama              0.4.5
-Deprecated            1.2.13
-DingtalkChatbot       1.5.3
-Faker                 15.1.0
-idna                  3.3
-iniconfig             1.1.1
-jsonpath              0.82
-packaging             21.3
-pip                   22.0.4
-pluggy                1.0.0
-py                    1.11.0
-pydantic              1.10.2
-PyMySQL               1.0.2
-pyparsing             3.0.9
-pytest                7.1.2
-python-dateutil       2.8.2
-PyYAML                6.0
-redis                 4.3.4
-requests              2.28.1
-requests-toolbelt     0.9.1
-ruamel.yaml           0.17.21
-ruamel.yaml.clib      0.2.6
-setuptools            58.1.0
-six                   1.16.0
-tomli                 2.0.1
-typing_extensions     4.3.0
-urllib3               1.26.11
-wrapt                 1.14.1
+allure-pytest==2.9.45
+DingtalkChatbot==1.5.3
+jsonpath==0.82
+pydantic==1.10.2
+PyMySQL==1.0.2
+pytest==7.1.2
+python-dateutil==2.8.2
+PyYAML==6.0
+redis==4.3.4
+requests==2.28.1
+requests-toolbelt==0.9.1
+ruamel.yaml==0.17.21
+urllib3==1.26.11
