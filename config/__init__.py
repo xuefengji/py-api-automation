@@ -23,6 +23,8 @@ class BaseConfig:
     case_dir = os.path.join(root_dir, 'test_case' )
     # 测试用例数据路径
     data_dir = os.path.join(root_dir, 'datas')
+    # 文件存储路径
+    file_dir = os.path.join(root_dir, 'files')
 
     cache_dir = os.path.join(root_dir, 'caches')
     if not os.path.exists(cache_dir):

@@ -16,14 +16,14 @@ class OperationYaml:
         读取 yaml 内容
         :param yaml_path: yaml 文件路径
         """
-        if os.path.exists(yaml_path):
-            try:
-                with open(yaml_path, 'r', encoding='utf-8') as fp:
-                    return yaml.load(fp, Loader=yaml.SafeLoader)
-            except Exception as e:
-                raise IOError('读取yaml文件失败！')
-        else:
+        if not os.path.exists(yaml_path):
             raise FileNotFoundError('yaml文件不存在！')
+        try:
+            with open(yaml_path, 'r', encoding='utf-8') as fp:
+                return yaml.load(fp, Loader=yaml.SafeLoader)
+        except Exception as e:
+            raise IOError('读取yaml文件失败！')
+
 
     @classmethod
     def write_yaml(cls, data, yaml_path):
