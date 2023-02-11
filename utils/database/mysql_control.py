@@ -24,11 +24,17 @@ class MySQL:
             ERROR.error(f"连接数据库失败，错误信息：{traceback.format_exc()}")
             quit()
 
+    def __enter__(self):
+        return self
 
-    def __del__(self):
-        if hasattr(self, "conn"):
-            self.cursor.close()
-            self.conn.close()
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        self.cursor.close()
+        self.conn.close()
+
+    # def __del__(self):
+    #     if hasattr(self, "conn"):
+    #         self.cursor.close()
+    #         self.conn.close()
 
     def execute(self, sql: str):
         """
@@ -63,9 +69,11 @@ class MySQL:
             ERROR.error(f"sql语句执行失败，错误信息：{traceback.format_exc()}")
 
 
+# TODO 细要修改前置 sql 的处理方式
 class SetUpSql(MySQL):
     """处理依赖前置sql"""
     def set_up_sql(self, sql: Union[List, None])->Dict:
+
         if sql:
             try:
                 data = {}
