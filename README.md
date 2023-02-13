@@ -2,7 +2,7 @@
 
 ## 框架介绍
 
-本框架是基于 Python+Pytest+yaml+json+mysql+log+allure 实现的接口自动化测试框架。
+本框架是基于 Python+Pytest+yaml+mysql+log+allure 实现的接口自动化测试框架。
 
 + github：https://github.com/xuefengji/py-api-automation
 + 开发者：SnowJi
@@ -28,7 +28,7 @@
 
 ### 当前计划
 
-+ 支持多接口数据依赖: 如A接口需要同时依赖B、C接口的响应数据作为参数
++ 支持多接口数据依赖: 如 A 接口需要同时依赖 B、C 接口的响应数据作为参数
 + 数据库断言: 直接在测试用例中写入查询的 SQL 即可断言，无需编写代码
 + 动态多断言: 如接口需要同时校验响应数据和 SQL 校验，支持多场景断言
 + 为了优化代码以便于后期的功能扩展，当前正在进行项目重构...
@@ -69,3 +69,12 @@
 ## 依赖库
 
 见 `requirements.txt`。
+
+## 用例相关字段介绍
+
+
+
+
+
+
+
